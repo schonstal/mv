@@ -16,10 +16,11 @@ class Player extends FlxSprite
   public static var WALL_UP:Int = 1 << 3;
   public static var WALL:Int = WALL_LEFT|WALL_RIGHT|WALL_UP;
 
-  public static var RUN_SPEED:Float = 100;
+  public static var RUN_SPEED:Float = 500;
 
   private var _speed:Point;
-  private var _gravity:Float = 600; 
+  private var _gravity:Float = 1000; 
+  private var _terminalVelocity:Float = 500;
 
   private var _jumpPressed:Bool = false;
   private var _grounded:Bool = false;
@@ -28,7 +29,7 @@ class Player extends FlxSprite
   private var _justLanded:Bool = false;
 
   private var _groundedTimer:Float = 0;
-  private var _groundedThreshold:Float = 0.07;
+  private var _groundedThreshold:Float = 0.075;
   
   private var collisionFlags:Int = 0;
 
@@ -39,12 +40,12 @@ class Player extends FlxSprite
 
   public var lockedToFlags:Int = 0;
 
-  public var jumpAmount:Float = 300;
-
+  public var jumpAmount:Float = 400;
 
   private var deadTimer:Float = 0;
   private var deadThreshold:Float = 0.4;
-  private var flying = false;
+
+  private var elapsed:Float = 0;
 
   var jumpSound:FlxSound;
 
@@ -69,12 +70,11 @@ class Player extends FlxSprite
     //offset.x = 10;
 
     _speed = new Point();
-    _speed.y = 215;
-    _speed.x = 800;
+    _speed.y = 380;
+    _speed.x = 2000;
 
     acceleration.y = _gravity;
 
-    maxVelocity.y = 325;
     maxVelocity.x = RUN_SPEED;
 
     jumpSound = FlxG.sound.load("assets/sounds/jump.wav");
@@ -114,107 +114,112 @@ class Player extends FlxSprite
     }
   }
 
-  override public function update(elapsed:Float):Void {
-    if(!dead) {
-      //Check for jump input, allow for early timing
-      jumpTimer += elapsed;
-      if(FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP) {
-        _jumpPressed = true;
-        jumpTimer = 0;
+  private function jumpPressed():Bool {
+    //Check for jump input, allow for early timing
+    jumpTimer += elapsed;
+    if(justPressed("jump")) {
+      _jumpPressed = true;
+      jumpTimer = 0;
+    }
+    if(jumpTimer > jumpThreshold) {
+      _jumpPressed = false;
+    }
+
+    return _jumpPressed;
+  }
+
+  private function tryJumping():Void {
+    if(jumpPressed() && _grounded) {
+      _grounded = false;
+      jumpSound.play();
+      animation.play("jump start");
+      _jumping = true;
+      velocity.y = -_speed.y;
+      _jumpPressed = false;
+    }
+
+    if(velocity.y < -1) {
+      if(pressed("jump") && velocity.y > -25) {
+        animation.play("jump peak");
+      }
+    } else if (velocity.y > 1) {
+      if(velocity.y > 100) {
+        animation.play("jump fall");
+      }
+    }
+
+    if(!pressed("jump") && velocity.y < 0)
+      acceleration.y = _gravity * 3;
+    else
+      acceleration.y = _gravity;
+  }
+
+  private function checkGround():Void {
+    if(collidesWith(WALL_UP)) {
+      if(!_grounded) {
+        animation.play("jump land");
+        _landing = true;
+        _justLanded = true;
+      }
+      _grounded = true;
+      _jumping = false;
+      _groundedTimer = 0;
+    } else {
+      _groundedTimer += elapsed;
+      if(_groundedTimer >= _groundedThreshold) {
         _grounded = false;
       }
-      if(jumpTimer > jumpThreshold) {
-        _jumpPressed = false;
-      }
+    }
 
-      if(collidesWith(WALL_UP)) {
-        if(!_grounded) {
-          animation.play("jump land");
-          _landing = true;
-          _justLanded = true;
-        }
-        _grounded = true;
-        _jumping = false;
-        _groundedTimer = 0;
-      } else {
-        _groundedTimer += elapsed;
-        if(_groundedTimer >= _groundedThreshold) {
-          _grounded = false;
-        }
-      }
+    if(_landing && animation.finished) {
+      _landing = false;
+    }
+  }
 
-      if(_landing && animation.finished) {
-        _landing = false;
-      }
-
-      if(FlxG.keys.pressed.A || FlxG.keys.pressed.LEFT) {
-        acceleration.x = -_speed.x * (velocity.x > 0 ? 4 : 1);
-        facing = FlxObject.LEFT;
-        playRunAnim();
-      } else if(FlxG.keys.pressed.D || FlxG.keys.pressed.RIGHT) {
-        acceleration.x = _speed.x * (velocity.x < 0 ? 4 : 1);
-        facing = FlxObject.RIGHT;
-        playRunAnim();
-      } else if (Math.abs(velocity.x) < 50) {
-        if(!_jumping && !_landing) animation.play("idle");
-        velocity.x = 0;
-        acceleration.x = 0;
-        _justLanded = false;
-      } else {
-        _justLanded = false;
-        var drag:Float = 3;
-        if (velocity.x > 0) {
-          acceleration.x = -_speed.x * drag;
-        } else if (velocity.x < 0) {
-          acceleration.x = _speed.x * drag;
-        }
-      }
-
-      if(_jumpPressed) {
-          if(_grounded) {
-            jumpSound.play();
-            animation.play("jump start");
-            _jumping = true;
-            velocity.y = -_speed.y;
-            _jumpPressed = false;
-          }
-      }
-
-      if(velocity.y < -1) {
-        if(jumpPressed() && velocity.y > -25) {
-          animation.play("jump peak");
-        }
-      } else if (velocity.y > 1) {
-        if(velocity.y > 100) {
-          animation.play("jump fall");
-        }
-      }
-
-
-      if(FlxG.keys.pressed.LEFT) {
-        jumpAmount--;
-      }
-      if(FlxG.keys.pressed.RIGHT) {
-        jumpAmount++;
-      }
-          
-      if(!jumpPressed() && velocity.y < 0)
-        acceleration.y = _gravity * 3;
-      else
-        acceleration.y = _gravity;
+  private function handleMovement():Void {
+    if(FlxG.keys.pressed.A || FlxG.keys.pressed.LEFT) {
+      acceleration.x = -_speed.x * (velocity.x > 0 ? 4 : 1);
+      facing = FlxObject.LEFT;
+      playRunAnim();
+    } else if(FlxG.keys.pressed.D || FlxG.keys.pressed.RIGHT) {
+      acceleration.x = _speed.x * (velocity.x < 0 ? 4 : 1);
+      facing = FlxObject.RIGHT;
+      playRunAnim();
+    } else if (Math.abs(velocity.x) < 50) {
+      if(!_jumping && !_landing) animation.play("idle");
+      velocity.x = 0;
+      acceleration.x = 0;
+      _justLanded = false;
     } else {
-      deadTimer += elapsed;
-      if(deadTimer >= deadThreshold && !flying) {
-        velocity.y = -125;
-        acceleration.y = 400;
-        flying = true;
+      _justLanded = false;
+      var drag:Float = 1;
+      if (velocity.x > 0) {
+        acceleration.x = -_speed.x * drag;
+      } else if (velocity.x < 0) {
+        acceleration.x = _speed.x * drag;
       }
+    }
+  }
+
+  private function terminalVelocity():Void {
+    if(velocity.y > _terminalVelocity) velocity.y = _terminalVelocity;
+  }
+
+  override public function update(elapsed:Float):Void {
+    this.elapsed = elapsed;
+    if(!dead) {
+      checkGround();
+      handleMovement();
+      tryJumping();
+      terminalVelocity();
     }
     super.update(elapsed);
   }
 
-  public function jumpPressed():Bool {
-    return FlxG.keys.pressed.W || FlxG.keys.pressed.SPACE || FlxG.keys.pressed.UP;
+  public function hitTile(tile:FlxObject):Void {
+    if((touching & FlxObject.FLOOR) > 0) {
+      setCollidesWith(Player.WALL_UP);
+    }
   }
 
   public function resetFlags():Void {
@@ -234,5 +239,21 @@ class Player extends FlxSprite
 
   public function collidesWith(bits:Int):Bool {
     return (collisionFlags & bits) > 0;
+  }
+
+  private function justPressed(action:String):Bool {
+    switch(action) {
+      case "jump":
+        return FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP;
+    }
+    return false;
+  }
+
+  private function pressed(action:String):Bool {
+    switch(action) {
+      case "jump":
+        return FlxG.keys.pressed.W || FlxG.keys.pressed.UP;
+    }
+    return false;
   }
 }

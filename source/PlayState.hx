@@ -47,9 +47,7 @@ class PlayState extends FlxState
 
   private function touchWalls():Void {
     FlxG.collide(activeRoom.foregroundTiles, player, function(tile:FlxObject, player:Player):Void {
-      if((player.touching & FlxObject.FLOOR) > 0) {
-        player.setCollidesWith(Player.WALL_UP);
-      }
+      player.hitTile(tile);
     });
   }
 

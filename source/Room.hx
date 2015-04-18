@@ -93,7 +93,7 @@ class Room extends TiledMap
       }
     }
     background = new FlxSprite();
-    background.loadGraphic("assets/images/backgrounds/" + properties.background + ".png");
+    background.loadGraphic("assets/images/backgrounds/sin.png");
   } // new()
   
   public function loadObjects(state:PlayState) {
