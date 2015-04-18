@@ -4,14 +4,14 @@
   <property name="backgound" value="sin"/>
  </properties>
  <tileset firstgid="1" name="tiles" tilewidth="20" tileheight="20">
-  <image source="../images/tiles/tiles.png" width="640" height="360"/>
+  <image source="../images/tiles/tiles.png" width="120" height="200"/>
  </tileset>
  <layer name="Tile Layer 1" width="32" height="18">
   <properties>
    <property name="tileset" value="tiles"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYhg4wATFo/aP2o9Pzaj9I9d+WoKBsp8JDY90+8nF9LBj1P7hjQHQTgFf
+   eJxjYBgF5AJNKB5IuwfCDeh2D2Q40AIYDrCZBmTqw2enAU5V+O0nRR+1zMGnD1faw5YGh6r9FmTqQwfIei1wqiLeLfTUO9IAIxAz0wkzYbGfE4iN6YRZBpH9AEjTE+g=
   </data>
  </layer>
 </map>
