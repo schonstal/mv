@@ -9,8 +9,9 @@ import flixel.util.FlxSave;
  */
 class Reg
 {
-  public static var level:Int = 1;
+  public static var player:Player;
 
-  // Which color palette to use
-  public static var palette:Int = 1;
+  public static var level:Int = 1;
+  public static var room:String = "";
+  public static var rooms:Array<String> = ["test"];
 }
