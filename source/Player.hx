@@ -8,9 +8,6 @@ import flixel.system.FlxSound;
 
 class Player extends FlxSprite
 {
-  public static var START_X:Float = 87;
-  public static var START_Y:Float = 190;
-
   public static var WALL_LEFT:Int = 1 << 1;
   public static var WALL_RIGHT:Int = 1 << 2;
   public static var WALL_UP:Int = 1 << 3;
@@ -83,9 +80,6 @@ class Player extends FlxSprite
   }
 
   public function init():Void {
-    x = START_X;
-    y = START_Y;
-
     _jumpPressed = false;
     _grounded = false;
     _jumping = false;

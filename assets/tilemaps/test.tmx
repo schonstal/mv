@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="20" tileheight="20">
- <properties>
-  <property name="backgound" value="sin"/>
- </properties>
- <tileset firstgid="1" name="tiles" tilewidth="20" tileheight="20">
-  <image source="../images/tiles/tiles.png" width="120" height="200"/>
+ <tileset firstgid="1" name="1" tilewidth="20" tileheight="20">
+  <image source="../images/tiles/1.png" width="120" height="200"/>
  </tileset>
  <layer name="Tile Layer 1" width="32" height="18">
   <properties>
-   <property name="tileset" value="tiles"/>
+   <property name="tileset" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYBgF5AJNKB5IuwfCDeh2D2Q40AIYDrCZBmTqw2enAU5V+O0nRR+1zMGnD1faw5YGh6r9FmTqQwfIei1wqiLeLfTUO9IAIxAz0wkzYbGfE4iN6YRZBpH9AEjTE+g=
+   eJwzZmBgYGEYOGA8aj9W+w1JMIMRiJmobL8BCWZw4jBjMNgPCkdQ+DDjwMTYTygu2IGYA4ecAdR9xngwIftJCQta209KuqSF/aSGBbn2Wwyw/cS4hV7243ILsepB+YMLD8aVd0YB7QGucpFeGF+6pAcGADLjFrY=
   </data>
  </layer>
 </map>

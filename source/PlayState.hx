@@ -17,6 +17,9 @@ class PlayState extends FlxState
   var player:Player;
   var activeRoom:Room;
 
+  var background:ScrollingBackground;
+  var invertedBackground:ScrollingBackground;
+
   override public function create():Void {
     super.create();
     for(fileName in Reg.rooms) {
@@ -25,7 +28,10 @@ class PlayState extends FlxState
                        new Room("assets/tilemaps/" + fileName + ".tmx"));
     }
 
-    player = new Player();
+    background = new ScrollingBackground("assets/images/backgrounds/1.png", false, 60);
+    add(background);
+
+    player = new Player(40,0);
     player.init();
     add(player);
 
@@ -67,13 +73,11 @@ class PlayState extends FlxState
     if (activeRoom != null) {
       remove(activeRoom.foregroundTiles);
       remove(activeRoom.exits);
-      remove(activeRoom.background);
     }
     remove(player);
 
     activeRoom = Reflect.field(rooms, roomName);
     activeRoom.loadObjects(this);
-    add(activeRoom.background);
     add(player);
     add(activeRoom.foregroundTiles);
     add(activeRoom.exits);
