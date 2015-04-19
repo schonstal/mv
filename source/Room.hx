@@ -49,8 +49,14 @@ class Room extends TiledMap
       var tileSheetName:String = tileLayer.properties.get("tileset");
       
       if (tileSheetName == null) {
-        throw "'tileset' property not defined for the '" + tileLayer.name +
-              "' layer. Please add the property to the layer.";
+        if(tileLayer.name == "Tile Layer 1") {
+          tileSheetName = "1";
+        } else if (tileLayer.name == "Tile Layer 2") {
+          tileSheetName = "2";
+        } else {
+          throw "'tileset' property not defined for the '" + tileLayer.name +
+                "' layer. Please add the property to the layer.";
+        }
       }
         
       var tileSet:TiledTileSet = null;
@@ -87,7 +93,11 @@ class Room extends TiledMap
           collidableTileLayers = new Array<FlxTilemap>();
         }
         
-        foregroundTiles.add(tilemap);
+        if(tileLayer.name == "Tile Layer 1") {
+          foregroundTiles.add(tilemap);
+        } else if(tileLayer.name == "Tile Layer 2") {
+          backgroundTiles.add(tilemap);
+        }
         collidableTileLayers.push(tilemap);
       }
     }
