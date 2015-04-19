@@ -11,13 +11,13 @@ class Player extends FlxSprite
   public static var WALL_LEFT:Int = 1 << 1;
   public static var WALL_RIGHT:Int = 1 << 2;
   public static var WALL_UP:Int = 1 << 3;
-  public static var WALL:Int = WALL_LEFT|WALL_RIGHT|WALL_UP;
+  public static var WALL:Int = WALL_LEFT|WALL_RIGHT;
 
-  public static var RUN_SPEED:Float = 500;
+  public static var RUN_SPEED:Float = 425;
 
   private var _speed:Point;
-  private var _gravity:Float = 1000; 
-  private var _terminalVelocity:Float = 500;
+  private var _gravity:Float = 1200; 
+  private var _terminalVelocity:Float = 600;
 
   private var _jumpPressed:Bool = false;
   private var _grounded:Bool = false;
@@ -25,10 +25,29 @@ class Player extends FlxSprite
   private var _landing:Bool = false;
   private var _justLanded:Bool = false;
 
+  //Allow the user to push jump a little bit after they fall off a gap
   private var _groundedTimer:Float = 0;
   private var _groundedThreshold:Float = 0.075;
+
+  //Stick to the wall
+  private var _wallTimer:Float = 0;
+  private var _wallThreshold:Float = 0.1;
+  private var _wallJumping:Bool = false;
+
+  //Push off the wall a little less than you can run
+  private var wallJumpSpeed:Float = 375;
+
+  //Allow the user to push jump a little bit after they fall off the wall
+  private var _wallJumpTimer:Float = 0;
+  private var _wallJumpThreshold:Float = 0.06;
+
+  //When you jump off a wall, stun a bit so you get a nice curve
+  private var _wallStunTimer:Float = 0;
+  private var _wallStunThreshold:Float = 0.04;
+  private var _wallStunned:Bool = false;
   
   private var collisionFlags:Int = 0;
+  private var onWall:Int = 0;
 
   private var jumpTimer:Float = 0;
   private var jumpThreshold:Float = 0.1;
@@ -67,8 +86,9 @@ class Player extends FlxSprite
     //offset.x = 10;
 
     _speed = new Point();
-    _speed.y = 380;
-    _speed.x = 2000;
+    _speed.y = 400;
+    _speed.x = 1500;
+
 
     acceleration.y = _gravity;
 
@@ -122,14 +142,27 @@ class Player extends FlxSprite
     return _jumpPressed;
   }
 
+  private function jump():Void {
+    jumpSound.play();
+    animation.play("jump start");
+    _jumping = true;
+    velocity.y = -_speed.y;
+    _jumpPressed = false;
+    Reg.inverted = !Reg.inverted;
+  }
+
   private function tryJumping():Void {
-    if(jumpPressed() && _grounded) {
-      _grounded = false;
-      jumpSound.play();
-      animation.play("jump start");
-      _jumping = true;
-      velocity.y = -_speed.y;
-      _jumpPressed = false;
+    if(jumpPressed()) {
+      if(_grounded) {
+        _grounded = false;
+        jump();
+      } else if(onWall > 0) {
+        jump();
+        _wallJumping = true;
+        velocity.x = (onWall & FlxObject.RIGHT) > 0 ? -wallJumpSpeed : wallJumpSpeed;
+        _wallStunTimer = 0;
+        _wallStunned = true;
+      }
     }
 
     if(velocity.y < -1) {
@@ -170,15 +203,35 @@ class Player extends FlxSprite
     }
   }
 
+  private function checkWalls():Void {
+    if(collidesWith(WALL)) {
+      _wallJumpTimer = 0;
+      _jumping = false;
+    } else {
+      _wallJumpTimer += elapsed;
+      if(_wallJumpTimer >= _wallJumpThreshold) {
+        onWall = 0;
+      }
+    }
+
+    _wallStunTimer += elapsed;
+    if(_wallStunTimer >= _wallStunThreshold) {
+      _wallStunned = false;
+    }
+  }
+
   private function handleMovement():Void {
-    if(FlxG.keys.pressed.A || FlxG.keys.pressed.LEFT) {
+    if(!pressed("jump") && !_wallStunned) _wallJumping = false;
+    if(pressed("left") && !_wallStunned) {
       acceleration.x = -_speed.x * (velocity.x > 0 ? 4 : 1);
       facing = FlxObject.LEFT;
       playRunAnim();
-    } else if(FlxG.keys.pressed.D || FlxG.keys.pressed.RIGHT) {
+      _wallJumping = false;
+    } else if(pressed("right") && !_wallStunned) {
       acceleration.x = _speed.x * (velocity.x < 0 ? 4 : 1);
       facing = FlxObject.RIGHT;
       playRunAnim();
+      _wallJumping = false;
     } else if (Math.abs(velocity.x) < 50) {
       if(!_jumping && !_landing) animation.play("idle");
       velocity.x = 0;
@@ -186,7 +239,7 @@ class Player extends FlxSprite
       _justLanded = false;
     } else {
       _justLanded = false;
-      var drag:Float = 1;
+      var drag:Float = !_wallJumping ? 2 : 0;
       if (velocity.x > 0) {
         acceleration.x = -_speed.x * drag;
       } else if (velocity.x < 0) {
@@ -203,16 +256,38 @@ class Player extends FlxSprite
     this.elapsed = elapsed;
     if(!dead) {
       checkGround();
+      checkWalls();
       handleMovement();
       tryJumping();
       terminalVelocity();
     }
     super.update(elapsed);
+
+    if(!dead) {
+      stickToWalls();
+    }
+  }
+
+  private function stickToWalls():Void {
+    if(pressed("direction")) {
+      _wallTimer += elapsed;
+    } else {
+      _wallTimer = 0;
+    }
+
+    if(_wallTimer <= _wallThreshold && !_grounded) {
+      if((onWall & FlxObject.RIGHT) > 0) { x += 1; }
+      if((onWall & FlxObject.LEFT) > 0) { x -= 1; }
+    }
   }
 
   public function hitTile(tile:FlxObject):Void {
     if((touching & FlxObject.FLOOR) > 0) {
-      setCollidesWith(Player.WALL_UP);
+      setCollidesWith(WALL_UP);
+    }
+    if((touching & FlxObject.WALL) > 0) {
+      setCollidesWith(WALL);
+      onWall = touching & FlxObject.WALL;
     }
   }
 
@@ -247,6 +322,12 @@ class Player extends FlxSprite
     switch(action) {
       case "jump":
         return FlxG.keys.pressed.W || FlxG.keys.pressed.UP;
+      case "left":
+        return FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A;
+      case "right":
+        return FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D;
+      case "direction":
+        return pressed("left") || pressed("right");
     }
     return false;
   }

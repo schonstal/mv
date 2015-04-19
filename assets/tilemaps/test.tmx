@@ -3,12 +3,20 @@
  <tileset firstgid="1" name="1" tilewidth="20" tileheight="20">
   <image source="../images/tiles/1.png" width="120" height="200"/>
  </tileset>
+ <tileset firstgid="61" name="2" tilewidth="20" tileheight="20">
+  <image source="../images/tiles/2.png" width="120" height="200"/>
+ </tileset>
  <layer name="Tile Layer 1" width="32" height="18">
   <properties>
-   <property name="tileset" value="1"/>
+   <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwzZmBgYGEYOGA8aj9W+w1JMIMRiJmobL8BCWZw4jBjMNgPCkdQ+DDjwMTYTygu2IGYA4ecAdR9xngwIftJCQta209KuqSF/aSGBbn2Wwyw/cS4hV7243ILsepB+YMLD8aVd0YB7QGucpFeGF+6pAcGADLjFrY=
+   eJwzZmBgYGGgP+AEYmMoHrV/1P5R+0ftH7V/5NnPBcQcVDLTHIj10bARAfsHCgwW+5kHCIswINLfQGIAZCUOxA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="32" height="18">
+  <data encoding="base64" compression="zlib">
+   eJwzZmBgYGGgP+AEYmMoHrV/1P6RZj87EHMNoP0wMGr/wNjPCMTMA2j/QKd/Yuw3B2J9NGxER/tpCQaT/cIMkLRITyyCZP9AYgAYKA6A
   </data>
  </layer>
 </map>
