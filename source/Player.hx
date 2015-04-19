@@ -5,6 +5,8 @@ import flixel.FlxSprite;
 import flixel.FlxObject;
 import flash.geom.Point;
 import flixel.system.FlxSound;
+import flixel.FlxCamera.FlxCameraShakeDirection;
+import flixel.input.gamepad.XboxButtonID;
 
 class Player extends FlxSprite
 {
@@ -80,7 +82,7 @@ class Player extends FlxSprite
     animation.play("idle");
 
     width = 12;
-    height = 14;
+    height = 15;
 
     offset.y = 1;
     offset.x = 3;
@@ -192,6 +194,7 @@ class Player extends FlxSprite
     if(collidesWith(WALL_UP)) {
       if(!_grounded) {
         animation.play("jump land");
+        FlxG.camera.shake(0.005, 0.05, function():Void {}, true, FlxCameraShakeDirection.Y_AXIS);
         _landing = true;
         _justLanded = true;
       }
@@ -256,7 +259,9 @@ class Player extends FlxSprite
   }
 
   private function terminalVelocity():Void {
-    if(velocity.y > _terminalVelocity) velocity.y = _terminalVelocity;
+    if(velocity.y > _terminalVelocity) {
+      velocity.y = _terminalVelocity;
+    }
   }
 
   override public function update(elapsed:Float):Void {
@@ -343,7 +348,7 @@ class Player extends FlxSprite
   private function justPressed(action:String):Bool {
     switch(action) {
       case "jump":
-        return FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP;
+        return FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP;// || FlxG.gamepads.anyJustPressed(17) || FlxG.gamepads.anyJustPressed(XboxButtonID.A);
     }
     return false;
   }
@@ -351,11 +356,11 @@ class Player extends FlxSprite
   private function pressed(action:String):Bool {
     switch(action) {
       case "jump":
-        return FlxG.keys.pressed.W || FlxG.keys.pressed.UP;
+        return FlxG.keys.pressed.W || FlxG.keys.pressed.UP;// || FlxG.gamepads.anyPressed(17) || FlxG.gamepads.anyJustPressed(XboxButtonID.A);
       case "left":
-        return FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A;
+        return FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A;// || FlxG.gamepads.anyMovedXAxis(XboxButtonID.LEFT_ANALOG_STICK) < 0;
       case "right":
-        return FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D;
+        return FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D;// || FlxG.gamepads.anyMovedXAxis(XboxButtonID.LEFT_ANALOG_STICK) > 0;
       case "direction":
         return pressed("left") || pressed("right");
     }
