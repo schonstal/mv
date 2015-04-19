@@ -18,7 +18,7 @@ import flixel.FlxCamera;
 
 class SpikeGroup extends FlxSpriteGroup
 {
-  public function new(X:Float, Y:Float, width:Float, height:Float, orientation:String) {
+  public function new(X:Float, Y:Float, width:Float, height:Float, orientation:String, invertAnimation:Bool = false) {
     super();
 
     var count:Int = 0;
@@ -33,9 +33,21 @@ class SpikeGroup extends FlxSpriteGroup
       spikeSprite = new FlxSprite();
       spikeSprite.loadGraphic("assets/images/spikes.png", true, 10, 10);
       spikeSprite.animation.add("spin", [0,1,2,3,4,5,6,7,8,9], 15, true);
-      spikeSprite.animation.play("spin", false, false, i % 9);
-      spikeSprite.x = X + (i * 10);
-      spikeSprite.y = Y + height - 10;
+      spikeSprite.animation.play("spin", false, invertAnimation, i % 9);
+      switch(orientation) {
+        case "up":
+          spikeSprite.x = X + (i * 10);
+          spikeSprite.y = Y + height - 10;
+        case "down":
+          spikeSprite.x = X + (i * 10);
+          spikeSprite.y = Y;
+        case "left":
+          spikeSprite.x = X + width - 10;
+          spikeSprite.y = Y + (i * 10);
+        case "right":
+          spikeSprite.x = X;
+          spikeSprite.y = Y + (i * 10);
+      }
       //spikeSprite.cameras = cameras;
       add(spikeSprite);
     }

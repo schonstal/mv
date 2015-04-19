@@ -135,11 +135,12 @@ class Room extends TiledMap
     
     switch (o.type.toLowerCase()) {
       case "spikes":
-        var spike = new SpikeGroup(x, y, o.width, o.height, o.custom.get("orientation"));
         if (g.name == "Object Layer 1") {
+          var spike = new SpikeGroup(x, y, o.width, o.height, o.custom.get("orientation"), true);
           spike.cameras = Reg.foregroundCameras;
           foregroundSpikes.add(spike);
         } else if (g.name == "Object Layer 2") {
+          var spike = new SpikeGroup(x, y, o.width, o.height, o.custom.get("orientation"), false);
           spike.cameras = Reg.backgroundCameras;
           backgroundSpikes.add(spike);
         }

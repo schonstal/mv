@@ -31,5 +31,22 @@
     <property name="orientation" value="up"/>
    </properties>
   </object>
+  <object type="spikes" x="240" y="180" width="80" height="20">
+   <properties>
+    <property name="orientation" value="down"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Object Layer 2" width="32" height="18">
+  <object type="spikes" x="160" y="180" width="20" height="100">
+   <properties>
+    <property name="orientation" value="right"/>
+   </properties>
+  </object>
+  <object type="spikes" x="440" y="200" width="20" height="40">
+   <properties>
+    <property name="orientation" value="left"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
