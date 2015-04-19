@@ -148,6 +148,7 @@ class Player extends FlxSprite
     _jumping = true;
     velocity.y = -_speed.y;
     _jumpPressed = false;
+    Reg.inverted = !Reg.inverted;
   }
 
   private function tryJumping():Void {

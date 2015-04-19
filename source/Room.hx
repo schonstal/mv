@@ -6,6 +6,7 @@ import haxe.xml.Parser;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.FlxCamera;
 import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
 import flixel.addons.editors.tiled.TiledMap;
@@ -13,7 +14,6 @@ import flixel.addons.editors.tiled.TiledObject;
 import flixel.addons.editors.tiled.TiledObjectGroup;
 import flixel.addons.editors.tiled.TiledTileSet;
 import flixel.tile.FlxBaseTilemap.FlxTilemapAutoTiling;
-
 
 /**
  * Modified from Samuel Batista's example source
@@ -33,6 +33,9 @@ class Room extends TiledMap
   public var foregroundTiles:FlxGroup;
   public var backgroundTiles:FlxGroup;
   public var exits:FlxGroup;
+
+  public var foregroundTilemap:FlxTilemap;
+  public var backgroundTilemap:FlxTilemap;
 
   private var collidableTileLayers:Array<FlxTilemap>;
 
@@ -94,9 +97,13 @@ class Room extends TiledMap
         }
         
         if(tileLayer.name == "Tile Layer 1") {
+          tilemap.cameras = Reg.foregroundCameras;
           foregroundTiles.add(tilemap);
+          foregroundTilemap = tilemap;
         } else if(tileLayer.name == "Tile Layer 2") {
+          tilemap.cameras = Reg.backgroundCameras;
           backgroundTiles.add(tilemap);
+          backgroundTilemap = tilemap;
         }
         collidableTileLayers.push(tilemap);
       }

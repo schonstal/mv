@@ -7,31 +7,39 @@ import flixel.FlxCamera;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.geom.Matrix;
+import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxTileFrames;
 import flash.filters.ColorMatrixFilter;
+import flixel.math.FlxPoint;
+import flash.display.BitmapData;
 
 class EffectSprite extends FlxSprite
 {
+  public var palette:Int;
+  public var target:FlxCamera;
+
   var paletteSprite:FlxSprite;
 
   var redArray:Array<Int>;
   var greenArray:Array<Int>;
   var blueArray:Array<Int>;
 
-  private var target:FlxCamera;
-  private var palette:Int;
-
   public function new(target:FlxCamera, palette:Int) {
     super(0,0);
     this.target = target;
     this.palette = palette;
 
-    makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT);
+    makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT, false);
     paletteSprite = new FlxSprite();
     paletteSprite.loadGraphic("assets/images/palette.png");
 
     redArray = new Array<Int>();
     greenArray = new Array<Int>();
     blueArray = new Array<Int>();
+  }
+
+  public function clear():Void {
+    makeGraphic(FlxG.width, FlxG.height, 0, false);
   }
 
   override public function draw():Void {
@@ -58,7 +66,9 @@ class EffectSprite extends FlxSprite
     pixels.paletteMap(pixels, new Rectangle(0,0,width,height), new Point(0,0), redArray, greenArray, blueArray);
     
     //resetFrameBitmapDatas();
+		
     dirty = true;
+    calcFrame();
     super.draw();
   }
 }

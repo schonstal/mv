@@ -10,6 +10,7 @@ import flixel.addons.effects.FlxGlitchSprite;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.FlxCamera;
 
 class PlayState extends FlxState
 {
@@ -20,8 +21,18 @@ class PlayState extends FlxState
   var background:ScrollingBackground;
   var invertedBackground:ScrollingBackground;
 
+  var backgroundCamera:FlxCamera;
+  var foregroundCamera:FlxCamera;
+
+  var backgroundEffect:EffectSprite;
+  var foregroundEffect:EffectSprite;
+  var globalEffect:EffectSprite;
+
   override public function create():Void {
     super.create();
+		Reg.backgroundCameras = [new FlxCamera(0, 0, FlxG.width*2, FlxG.height*2)];
+    Reg.foregroundCameras = [new FlxCamera(0, 0, FlxG.width*2, FlxG.height*2)];
+
     for(fileName in Reg.rooms) {
       Reflect.setField(rooms,
                        fileName,
@@ -31,13 +42,21 @@ class PlayState extends FlxState
     background = new ScrollingBackground("assets/images/backgrounds/1.png", false, 60);
     add(background);
 
+    backgroundEffect = new EffectSprite(Reg.backgroundCameras[0], 3);
+    add(backgroundEffect);
+
+    foregroundEffect = new EffectSprite(Reg.foregroundCameras[0], 0);
+    add(foregroundEffect);
+
+    globalEffect = new EffectSprite(FlxG.camera, 2);
+    add(globalEffect);
+
     player = new Player(40,0);
     player.init();
     add(player);
 
     switchRoom("test");
 
-    add(new EffectSprite(FlxG.camera, 1));
   }
   
   override public function destroy():Void {
@@ -51,12 +70,25 @@ class PlayState extends FlxState
 
     checkExits();
     touchWalls();
+
+    backgroundEffect.clear();
+    foregroundEffect.clear();
+
+    if(Reg.inverted) {
+      backgroundEffect.target = Reg.foregroundCameras[0];
+      foregroundEffect.target = Reg.backgroundCameras[0];
+    } else {
+      backgroundEffect.target = Reg.backgroundCameras[0];
+      foregroundEffect.target = Reg.foregroundCameras[0];
+    }
+    globalEffect.palette = Reg.inverted ? 1 : 2;
   }
 
   private function touchWalls():Void {
-    FlxG.collide(activeRoom.foregroundTiles, player, function(tile:FlxObject, player:Player):Void {
-      player.hitTile(tile);
-    });
+    var tiles = 
+    FlxG.collide(Reg.inverted ? activeRoom.backgroundTiles : activeRoom.foregroundTiles,
+                player,
+                function(tile:FlxObject, player:Player):Void { player.hitTile(tile); });
   }
 
   private function checkExits():Void {
@@ -80,6 +112,7 @@ class PlayState extends FlxState
 
     activeRoom = Reflect.field(rooms, roomName);
     activeRoom.loadObjects(this);
+    add(activeRoom.backgroundTiles);
     add(player);
     add(activeRoom.foregroundTiles);
     add(activeRoom.exits);
