@@ -11,6 +11,7 @@ import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.FlxCamera;
+import flash.display.BlendMode;
 
 class PlayState extends FlxState
 {
@@ -27,6 +28,9 @@ class PlayState extends FlxState
   var backgroundEffect:EffectSprite;
   var foregroundEffect:EffectSprite;
   var globalEffect:EffectSprite;
+
+  var shimmerOverlay:FlxSprite;
+  var shimmerSin:Float = 0;
 
   override public function create():Void {
     super.create();
@@ -48,6 +52,11 @@ class PlayState extends FlxState
     globalEffect = new EffectSprite(FlxG.camera, 2);
     add(globalEffect);
 
+    shimmerOverlay = new FlxSprite();
+    shimmerOverlay.makeGraphic(FlxG.width, FlxG.height, 0xffffffff);
+    shimmerOverlay.blend = BlendMode.OVERLAY;
+    add(shimmerOverlay);
+
     player = new Player(80,80);
     player.init();
     add(player);
@@ -62,6 +71,9 @@ class PlayState extends FlxState
 
   override public function update(elapsed:Float):Void {
     super.update(elapsed);
+
+    shimmerSin += elapsed;
+    shimmerOverlay.alpha = 0.1 + 0.1 * Math.sin(shimmerSin);
     
     player.resetFlags();
 

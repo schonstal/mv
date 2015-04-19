@@ -348,7 +348,7 @@ class Player extends FlxSprite
   private function justPressed(action:String):Bool {
     switch(action) {
       case "jump":
-        return FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP || FlxG.gamepads.anyJustPressed(17);
+        return FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP;// || FlxG.gamepads.anyJustPressed(17) || FlxG.gamepads.anyJustPressed(XboxButtonID.A);
     }
     return false;
   }
@@ -356,11 +356,11 @@ class Player extends FlxSprite
   private function pressed(action:String):Bool {
     switch(action) {
       case "jump":
-        return FlxG.keys.pressed.W || FlxG.keys.pressed.UP || FlxG.gamepads.anyPressed(17);
+        return FlxG.keys.pressed.W || FlxG.keys.pressed.UP;// || FlxG.gamepads.anyPressed(17) || FlxG.gamepads.anyJustPressed(XboxButtonID.A);
       case "left":
-        return FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A || FlxG.gamepads.anyMovedXAxis(XboxButtonID.LEFT_ANALOG_STICK) < 0;
+        return FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A;// || FlxG.gamepads.anyMovedXAxis(XboxButtonID.LEFT_ANALOG_STICK) < 0;
       case "right":
-        return FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D || FlxG.gamepads.anyMovedXAxis(XboxButtonID.LEFT_ANALOG_STICK) > 0;
+        return FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D;// || FlxG.gamepads.anyMovedXAxis(XboxButtonID.LEFT_ANALOG_STICK) > 0;
       case "direction":
         return pressed("left") || pressed("right");
     }
