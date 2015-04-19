@@ -194,7 +194,6 @@ class Player extends FlxSprite
     if(collidesWith(WALL_UP)) {
       if(!_grounded) {
         animation.play("jump land");
-        FlxG.camera.shake(0.005, 0.05, function():Void {}, true, FlxCameraShakeDirection.Y_AXIS);
         _landing = true;
         _justLanded = true;
       }
@@ -319,6 +318,9 @@ class Player extends FlxSprite
   public function hitTile(tile:FlxObject):Void {
     if((touching & FlxObject.FLOOR) > 0) {
       setCollidesWith(WALL_UP);
+      if(velocity.y >= _terminalVelocity) {
+        FlxG.camera.shake(0.005, 0.05, function():Void {}, true, FlxCameraShakeDirection.Y_AXIS);
+      }
     }
     if((touching & FlxObject.WALL) > 0) {
       setCollidesWith(WALL);

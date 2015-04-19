@@ -32,7 +32,8 @@ class Room extends TiledMap
   // Array of tilemaps used for collision
   public var foregroundTiles:FlxGroup;
   public var backgroundTiles:FlxGroup;
-  public var exits:FlxGroup;
+  public var foregroundSpikes:FlxGroup;
+  public var backgroundSpikes:FlxGroup;
 
   public var foregroundTilemap:FlxTilemap;
   public var backgroundTilemap:FlxTilemap;
@@ -45,7 +46,9 @@ class Room extends TiledMap
     
     foregroundTiles = new FlxGroup();
     backgroundTiles = new FlxGroup();
-    exits = new FlxGroup();
+
+    foregroundSpikes = new FlxGroup();
+    backgroundSpikes = new FlxGroup();
     
     // Load Tile Maps
     for (tileLayer in layers) {
@@ -131,9 +134,15 @@ class Room extends TiledMap
     }
     
     switch (o.type.toLowerCase()) {
-      case "exit":
-        var exit = new ExitObject(x, y, o.width, o.height, o.custom.get("room"));
-        exits.add(exit);
+      case "spikes":
+        var spike = new SpikeGroup(x, y, o.width, o.height, o.custom.get("orientation"));
+        if (g.name == "Object Layer 1") {
+          spike.cameras = Reg.foregroundCameras;
+          foregroundSpikes.add(spike);
+        } else if (g.name == "Object Layer 2") {
+          spike.cameras = Reg.backgroundCameras;
+          backgroundSpikes.add(spike);
+        }
     }
   }
   

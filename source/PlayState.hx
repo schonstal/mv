@@ -52,12 +52,11 @@ class PlayState extends FlxState
     globalEffect = new EffectSprite(FlxG.camera, 2);
     add(globalEffect);
 
-    player = new Player(80,80);
+    player = new Player(FlxG.width/2,FlxG.height/4*3-20);
     player.init();
     add(player);
 
-    switchRoom("pit");
-
+    switchRoom("start");
   }
   
   override public function destroy():Void {
@@ -85,7 +84,6 @@ class PlayState extends FlxState
   }
 
   private function touchWalls():Void {
-    var tiles = 
     FlxG.collide(Reg.inverted ? activeRoom.backgroundTiles : activeRoom.foregroundTiles,
                 player,
                 function(tile:FlxObject, player:Player):Void { player.hitTile(tile); });
@@ -94,17 +92,16 @@ class PlayState extends FlxState
   private function checkExits():Void {
     if(player.x < 0) {
       player.x = FlxG.width - player.width;
-//      switchRoom(exit.roomName);
+      switchRoom(activeRoom.properties.get("west"));
     } else if(player.x + player.width > FlxG.width) {
       player.x = 0;
-//      switchRoom(exit.roomName);
+      switchRoom(activeRoom.properties.get("east"));
     } else if (player.y < 0) {
       player.y = FlxG.height - player.height;
-//      switchRoom(exit.roomName);
+      switchRoom(activeRoom.properties.get("north"));
     } else if (player.y + player.height > FlxG.height) {
       player.y = 0;
       switchRoom(activeRoom.properties.get("south"));
-//      switchRoom(exit.roomName);
     }
   }
 
@@ -117,6 +114,8 @@ class PlayState extends FlxState
     if (activeRoom != null) {
       remove(activeRoom.foregroundTiles);
       remove(activeRoom.backgroundTiles);
+      remove(activeRoom.foregroundSpikes);
+      remove(activeRoom.backgroundSpikes);
     }
     remove(player);
 
@@ -124,6 +123,8 @@ class PlayState extends FlxState
     activeRoom.loadObjects(this);
     add(activeRoom.backgroundTiles);
     add(player);
+    add(activeRoom.backgroundSpikes);
+    add(activeRoom.foregroundSpikes);
     add(activeRoom.foregroundTiles);
   }
 }
