@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="20" tileheight="20">
  <tileset firstgid="1" name="1" tilewidth="20" tileheight="20">
-  <image source="../images/tiles/1.png" width="120" height="200"/>
+  <image source="../images/tiles/1.png" width="120" height="320"/>
  </tileset>
- <tileset firstgid="61" name="2" tilewidth="20" tileheight="20">
-  <image source="../images/tiles/2.png" width="120" height="200"/>
+ <tileset firstgid="97" name="2" tilewidth="20" tileheight="20">
+  <image source="../images/tiles/2.png" width="120" height="320"/>
  </tileset>
  <layer name="Tile Layer 1" width="32" height="18">
   <properties>
    <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwzZmBgYGGgP+AEYmMoHrV/1P5R+0ftH7V/5NnPBcQcVDLTHIj10bARAfsHCgwW+5kHCIswINLfQGIAZCUOxA==
+   eJwzZmBgYGGgP+AEYmMoHrV/1P6RZj87EHMNoP0wMGr/wNjPCMTMA2j/QKd/mP2gPMBBJTPNgVgfDRsRsH+gwGCxn3mAsAgDIv0NJAYAhGoNrQ==
   </data>
  </layer>
  <layer name="Tile Layer 2" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJwzZmBgYGGgP+AEYmMoHrV/1P6RZj87EHMNoP0wMGr/wNjPCMTMA2j/QKd/Yuw3B2J9NGxER/tpCQaT/cIMkLRITyyCZP9AYgAYKA6A
+   eJwzZmBgYGGgP+AEYmMoHrV/1P6RZj87EHMNoP0wMGr/wNhvDsRqA2g/CMDywEDaD8oDHDjkQWGkj4aNqGz/QILBYD8zBZiJArsZgViEAVEGk4OFKXA7zG4ATwsJyw==
   </data>
  </layer>
+ <objectgroup name="Hazards 1" width="32" height="18">
+  <object x="320" y="320" width="280" height="20"/>
+  <object x="600" y="220" width="20" height="100"/>
+ </objectgroup>
 </map>

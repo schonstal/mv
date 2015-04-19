@@ -42,6 +42,9 @@ class PlayState extends FlxState
     background = new ScrollingBackground("assets/images/backgrounds/1.png", false, 60);
     add(background);
 
+    invertedBackground = new ScrollingBackground("assets/images/backgrounds/2.png", true, 60);
+    add(invertedBackground);
+
     backgroundEffect = new EffectSprite(Reg.backgroundCameras[0], 3);
     add(backgroundEffect);
 
@@ -82,6 +85,8 @@ class PlayState extends FlxState
       foregroundEffect.target = Reg.foregroundCameras[0];
     }
     globalEffect.palette = Reg.inverted ? 1 : 2;
+    invertedBackground.visible = Reg.inverted;
+    background.visible = !Reg.inverted;
   }
 
   private function touchWalls():Void {

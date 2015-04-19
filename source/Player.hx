@@ -122,7 +122,7 @@ class Player extends FlxSprite
   }
 
   public function playRunAnim():Void {
-    if(!_jumping && !_landing) {
+    if(!_jumping && !_landing && !stuckToWall()) {
       if(_justLanded) animation.play("run from landing");
       else animation.play("run");
     }
@@ -149,6 +149,7 @@ class Player extends FlxSprite
     velocity.y = -_speed.y;
     _jumpPressed = false;
     Reg.inverted = !Reg.inverted;
+    FlxG.camera.flash(0x33ffffff, 0.1);
   }
 
   private function tryJumping():Void {
@@ -171,11 +172,11 @@ class Player extends FlxSprite
       }
     }
 
-    if(velocity.y < -1) {
+    if(velocity.y < -1 && !stuckToWall()) {
       if(pressed("jump") && velocity.y > -25) {
         animation.play("jump peak");
       }
-    } else if (velocity.y > 1) {
+    } else if (velocity.y > 1 && !(stuckToWall() && pressedAwayFromWall())) {
       if(velocity.y > 100) {
         animation.play("jump fall");
       }
@@ -230,16 +231,16 @@ class Player extends FlxSprite
     if(!pressed("jump") && !_wallStunned || _grounded) _wallJumping = false;
     if(pressed("left") && !_wallStunned) {
       acceleration.x = -_speed.x * (velocity.x > 0 ? 4 : 1);
-      facing = FlxObject.LEFT;
+      if(!stuckToWall()) facing = FlxObject.LEFT;
       playRunAnim();
       _wallJumping = false;
     } else if(pressed("right") && !_wallStunned) {
       acceleration.x = _speed.x * (velocity.x < 0 ? 4 : 1);
-      facing = FlxObject.RIGHT;
+      if(!stuckToWall()) facing = FlxObject.RIGHT;
       playRunAnim();
       _wallJumping = false;
     } else if (Math.abs(velocity.x) < 50) {
-      if(!_jumping && !_landing) animation.play("idle");
+      if(!_jumping && !_landing && !stuckToWall()) animation.play("idle");
       velocity.x = 0;
       acceleration.x = 0;
       _justLanded = false;
@@ -267,6 +268,7 @@ class Player extends FlxSprite
       tryJumping();
       terminalVelocity();
     }
+
     super.update(elapsed);
 
     if(!dead) {
@@ -275,17 +277,38 @@ class Player extends FlxSprite
   }
 
   private function stickToWalls():Void {
-    if(pressed("direction")) {
+    if(pressedAwayFromWall()) {
       _wallTimer += elapsed;
     } else {
       _wallTimer = 0;
     }
 
-    if(_wallTimer <= _wallThreshold && !_grounded) {
-      if((onWall & FlxObject.RIGHT) > 0) { x += 1; }
-      if((onWall & FlxObject.LEFT) > 0) { x -= 1; }
-      if(onWall > 0) { animation.play("wall slide"); }
+    if(stuckToWall() && !_jumping) {
+      if((onWall & FlxObject.RIGHT) > 0) { 
+        x += 1;
+        facing = FlxObject.RIGHT;
+      }
+      if((onWall & FlxObject.LEFT) > 0) {
+        x -= 1;
+        facing = FlxObject.LEFT;
+      }
+      if(!_jumping && _wallTimer == 0) {
+        animation.play("wall slide");
+      }
     }
+  }
+
+  private function pressedAwayFromWall():Bool {
+    if((onWall & FlxObject.LEFT) > 0) {
+      return pressed("right");
+    } else if ((onWall & FlxObject.RIGHT) > 0) {
+      return pressed("left");
+    }
+    return false;
+  }
+
+  private function stuckToWall():Bool {
+    return _wallTimer <= _wallThreshold && !_grounded && onWall > 0;
   }
 
   public function hitTile(tile:FlxObject):Void {
