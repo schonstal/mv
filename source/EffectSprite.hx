@@ -29,17 +29,13 @@ class EffectSprite extends FlxSprite
     this.target = target;
     this.palette = palette;
 
-    makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT, false);
+    makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT, true);
     paletteSprite = new FlxSprite();
     paletteSprite.loadGraphic("assets/images/palette.png");
 
     redArray = new Array<Int>();
     greenArray = new Array<Int>();
     blueArray = new Array<Int>();
-  }
-
-  public function clear():Void {
-    makeGraphic(FlxG.width, FlxG.height, 0, false);
   }
 
   override public function draw():Void {
@@ -69,6 +65,7 @@ class EffectSprite extends FlxSprite
 		
     dirty = true;
     calcFrame();
+    target.fill(0, false);
     super.draw();
   }
 }

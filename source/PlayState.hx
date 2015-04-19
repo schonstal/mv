@@ -52,11 +52,6 @@ class PlayState extends FlxState
     globalEffect = new EffectSprite(FlxG.camera, 2);
     add(globalEffect);
 
-    shimmerOverlay = new FlxSprite();
-    shimmerOverlay.makeGraphic(FlxG.width, FlxG.height, 0xffffffff);
-    shimmerOverlay.blend = BlendMode.OVERLAY;
-    add(shimmerOverlay);
-
     player = new Player(80,80);
     player.init();
     add(player);
@@ -71,17 +66,11 @@ class PlayState extends FlxState
 
   override public function update(elapsed:Float):Void {
     super.update(elapsed);
-
-    shimmerSin += elapsed;
-    shimmerOverlay.alpha = 0.1 + 0.1 * Math.sin(shimmerSin);
     
     player.resetFlags();
 
     checkExits();
     touchWalls();
-
-    backgroundEffect.clear();
-    foregroundEffect.clear();
 
     if(Reg.inverted) {
       backgroundEffect.target = Reg.foregroundCameras[0];
@@ -103,15 +92,20 @@ class PlayState extends FlxState
   }
 
   private function checkExits():Void {
-    FlxG.overlap(activeRoom.exits, player, function(exit:ExitObject, player:Player):Void {
-      if(player.x < 0) {
-        player.x = 320 - player.width;
-        switchRoom(exit.roomName);
-      } else if(player.x + player.width > 320) {
-        player.x = 0;
-        switchRoom(exit.roomName);
-      }
-    });
+    if(player.x < 0) {
+      player.x = FlxG.width - player.width;
+//      switchRoom(exit.roomName);
+    } else if(player.x + player.width > FlxG.width) {
+      player.x = 0;
+//      switchRoom(exit.roomName);
+    } else if (player.y < 0) {
+      player.y = FlxG.height - player.height;
+//      switchRoom(exit.roomName);
+    } else if (player.y + player.height > FlxG.height) {
+      player.y = 0;
+      switchRoom(activeRoom.properties.get("south"));
+//      switchRoom(exit.roomName);
+    }
   }
 
   public function switchRoom(roomName:String):Void {
@@ -122,7 +116,7 @@ class PlayState extends FlxState
     }
     if (activeRoom != null) {
       remove(activeRoom.foregroundTiles);
-      remove(activeRoom.exits);
+      remove(activeRoom.backgroundTiles);
     }
     remove(player);
 
@@ -131,6 +125,5 @@ class PlayState extends FlxState
     add(activeRoom.backgroundTiles);
     add(player);
     add(activeRoom.foregroundTiles);
-    add(activeRoom.exits);
   }
 }
