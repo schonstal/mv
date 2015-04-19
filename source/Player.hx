@@ -67,9 +67,8 @@ class Player extends FlxSprite
 
   public function new(X:Float=0,Y:Float=0) {
     super(X,Y);
-    //loadGraphic("assets/images/player.png", true, 32, 32);
-    makeGraphic(18,18,0xffff00ff);
-    animation.add("idle", [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2], 15, true);
+    loadGraphic("assets/images/player.png", true, 16, 16);
+    animation.add("idle", [0, 0, 1, 2, 3, 3], 10, true);
     animation.add("run", [6, 7, 8, 9, 10, 11], 15, true);
     animation.add("run from landing", [10, 11, 6, 7, 8, 9], 15, true);
     animation.add("jump start", [12], 15, true);
@@ -77,13 +76,14 @@ class Player extends FlxSprite
     animation.add("jump fall", [14], 15, true);
     animation.add("jump land", [9], 15, false);
     animation.add("die", [18]);
+    animation.add("wall slide", [15]);
     animation.play("idle");
 
-    //width = 12;
-    //height = 20;
+    width = 12;
+    height = 14;
 
-    //offset.y = 12;
-    //offset.x = 10;
+    offset.y = 1;
+    offset.x = 3;
 
     _speed = new Point();
     _speed.y = 400;
@@ -159,7 +159,13 @@ class Player extends FlxSprite
       } else if(onWall > 0) {
         jump();
         _wallJumping = true;
-        velocity.x = (onWall & FlxObject.RIGHT) > 0 ? -wallJumpSpeed : wallJumpSpeed;
+        if((onWall & FlxObject.RIGHT) > 0) {
+          velocity.x = -wallJumpSpeed;
+          facing = FlxObject.LEFT;
+        } else {
+          velocity.x = wallJumpSpeed;
+          facing = FlxObject.RIGHT;
+        }
         _wallStunTimer = 0;
         _wallStunned = true;
       }
@@ -221,7 +227,7 @@ class Player extends FlxSprite
   }
 
   private function handleMovement():Void {
-    if(!pressed("jump") && !_wallStunned) _wallJumping = false;
+    if(!pressed("jump") && !_wallStunned || _grounded) _wallJumping = false;
     if(pressed("left") && !_wallStunned) {
       acceleration.x = -_speed.x * (velocity.x > 0 ? 4 : 1);
       facing = FlxObject.LEFT;
@@ -278,6 +284,7 @@ class Player extends FlxSprite
     if(_wallTimer <= _wallThreshold && !_grounded) {
       if((onWall & FlxObject.RIGHT) > 0) { x += 1; }
       if((onWall & FlxObject.LEFT) > 0) { x -= 1; }
+      if(onWall > 0) { animation.play("wall slide"); }
     }
   }
 
