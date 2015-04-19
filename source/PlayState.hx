@@ -33,12 +33,6 @@ class PlayState extends FlxState
 		Reg.backgroundCameras = [new FlxCamera(0, 0, FlxG.width*2, FlxG.height*2)];
     Reg.foregroundCameras = [new FlxCamera(0, 0, FlxG.width*2, FlxG.height*2)];
 
-    for(fileName in Reg.rooms) {
-      Reflect.setField(rooms,
-                       fileName,
-                       new Room("assets/tilemaps/" + fileName + ".tmx"));
-    }
-
     background = new ScrollingBackground("assets/images/backgrounds/1.png", false, 60);
     add(background);
 
@@ -54,11 +48,11 @@ class PlayState extends FlxState
     globalEffect = new EffectSprite(FlxG.camera, 2);
     add(globalEffect);
 
-    player = new Player(40,0);
+    player = new Player(80,80);
     player.init();
     add(player);
 
-    switchRoom("test");
+    switchRoom("pit");
 
   }
   
@@ -109,13 +103,18 @@ class PlayState extends FlxState
   }
 
   public function switchRoom(roomName:String):Void {
+    var room:Room = Reflect.field(rooms, roomName);
+    if (room == null) {
+      room = new Room("assets/tilemaps/" + roomName + ".tmx");
+      Reflect.setField(rooms, roomName, room);
+    }
     if (activeRoom != null) {
       remove(activeRoom.foregroundTiles);
       remove(activeRoom.exits);
     }
     remove(player);
 
-    activeRoom = Reflect.field(rooms, roomName);
+    activeRoom = room;
     activeRoom.loadObjects(this);
     add(activeRoom.backgroundTiles);
     add(player);
