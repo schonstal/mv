@@ -36,6 +36,8 @@ class PlayState extends FlxState
     add(player);
 
     switchRoom("test");
+
+    add(new EffectSprite(FlxG.camera, 1));
   }
   
   override public function destroy():Void {
