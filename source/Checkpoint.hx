@@ -52,6 +52,7 @@ class Checkpoint extends FlxSprite
 
     animation.play("activate");
     Reg.checkpoint = this;
+    FlxG.sound.play("assets/sounds/checkpoint.wav");
   }
 
   private function finishAnimation(anim:String):Void {
