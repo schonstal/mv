@@ -51,7 +51,11 @@ class PlayState extends FlxState
     globalEffect = new EffectSprite(FlxG.camera, 2);
     add(globalEffect);
 
-    player = new Player(FlxG.width/2,FlxG.height/4*3-20);
+    if(Reg.checkpoint == null) {
+      Reg.checkpoint = new Checkpoint(340, 220, "start");
+    }
+
+    player = new Player(Reg.checkpoint.x + 4, Reg.checkpoint.y - 4);
     player.init();
     Reg.player = player;
     add(player);
@@ -60,7 +64,8 @@ class PlayState extends FlxState
     respawnSprite.spawn();
     add(respawnSprite);
 
-    switchRoom("start");
+    switchRoom(Reg.checkpoint.room);
+    Reg.inverted = Reg.checkpoint.inverted;
 
     //DEBUGGER
     FlxG.debugger.drawDebug = true;

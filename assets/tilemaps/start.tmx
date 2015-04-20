@@ -26,38 +26,7 @@
   </data>
  </layer>
  <objectgroup color="#43c52e" name="Object Layer 1" width="32" height="18">
-  <object type="spikes" x="460" y="260" width="120" height="20">
-   <properties>
-    <property name="orientation" value="up"/>
-   </properties>
-  </object>
-  <object type="spikes" x="240" y="180" width="80" height="20">
-   <properties>
-    <property name="orientation" value="down"/>
-   </properties>
-  </object>
-  <object type="spikes" x="160" y="180" width="20" height="100">
-   <properties>
-    <property name="orientation" value="right"/>
-   </properties>
-  </object>
   <object type="checkpoint" x="340" y="220" width="20" height="80"/>
  </objectgroup>
- <objectgroup name="Object Layer 2" width="32" height="18">
-  <object type="spikes" x="160" y="180" width="20" height="100">
-   <properties>
-    <property name="orientation" value="right"/>
-   </properties>
-  </object>
-  <object type="spikes" x="440" y="200" width="20" height="40">
-   <properties>
-    <property name="orientation" value="left"/>
-   </properties>
-  </object>
-  <object type="spikes" x="460" y="260" width="120" height="20">
-   <properties>
-    <property name="orientation" value="up"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup name="Object Layer 2" width="32" height="18"/>
 </map>

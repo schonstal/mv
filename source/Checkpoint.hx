@@ -12,7 +12,8 @@ import flixel.math.FlxPoint;
 
 class Checkpoint extends FlxSprite
 {
-  var room:String = "start";
+  public var room:String = "start";
+  public var inverted:Bool = false;
 
   public function new(X:Float=0, Y:Float=0, room:String) {
     super(X, Y);

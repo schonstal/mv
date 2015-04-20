@@ -157,10 +157,12 @@ class Room extends TiledMap
       case "checkpoint":
         if (g.name == "Object Layer 1") {
           var checkpoint = new Checkpoint(x, y, roomName);
+          checkpoint.inverted = false;
           checkpoint.cameras = Reg.foregroundCameras;
           foregroundCheckpoints.add(checkpoint);
         } else if (g.name == "Object Layer 2") {
           var checkpoint = new Checkpoint(x, y, roomName);
+          checkpoint.inverted = true;
           checkpoint.cameras = Reg.backgroundCameras;
           backgroundCheckpoints.add(checkpoint);
         }
