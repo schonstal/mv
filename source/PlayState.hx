@@ -152,7 +152,6 @@ class PlayState extends FlxState
     add(respawnSprite);
 
     jumpSprite = new JumpSprite();
-    jumpSprite.cameras = Reg.backgroundCameras.concat(Reg.foregroundCameras);
     player.jumpSprite = jumpSprite;
     add(jumpSprite);
 
@@ -202,12 +201,13 @@ class PlayState extends FlxState
     Reg.activeRoom.refresh();
     add(Reg.activeRoom.backgroundTiles);
     add(player);
-    add(respawnSprite);
-    add(jumpSprite);
     add(Reg.activeRoom.backgroundSpikes);
     add(Reg.activeRoom.foregroundSpikes);
     add(Reg.activeRoom.foregroundTiles);
     add(Reg.activeRoom.backgroundCheckpoints);
     add(Reg.activeRoom.foregroundCheckpoints);
+    add(respawnSprite);
+    add(jumpSprite);
+    jumpSprite.visible = false;
   }
 }
