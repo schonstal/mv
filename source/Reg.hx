@@ -2,6 +2,7 @@ package;
 
 import flixel.util.FlxSave;
 import flixel.FlxCamera;
+import flixel.math.FlxPoint;
 
 /**
  * Handy, pre-built Registry class that can be used to store 
@@ -18,4 +19,8 @@ class Reg
   public static var foregroundCameras:Array<FlxCamera> = [];
   public static var backgroundCameras:Array<FlxCamera> = [];
   public static var inverted:Bool = false;
+
+  public static var checkpoint:Checkpoint;
+
+  public static var activeRoom:Room;
 }

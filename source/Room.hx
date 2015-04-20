@@ -38,10 +38,17 @@ class Room extends TiledMap
   public var foregroundTilemap:FlxTilemap;
   public var backgroundTilemap:FlxTilemap;
 
+  public var foregroundCheckpoints:FlxGroup;
+  public var backgroundCheckpoints:FlxGroup;
+
   private var collidableTileLayers:Array<FlxTilemap>;
 
-  
-  public function new(tiles:Dynamic) {
+  var roomName:String;
+
+  public function new(roomName:String) {
+    this.roomName = roomName;
+    var tiles = "assets/tilemaps/" + roomName + ".tmx";
+
     super(tiles);
     
     foregroundTiles = new FlxGroup();
@@ -49,6 +56,9 @@ class Room extends TiledMap
 
     foregroundSpikes = new FlxGroup();
     backgroundSpikes = new FlxGroup();
+
+    foregroundCheckpoints = new FlxGroup();
+    backgroundCheckpoints = new FlxGroup();
     
     // Load Tile Maps
     for (tileLayer in layers) {
@@ -143,6 +153,16 @@ class Room extends TiledMap
           var spike = new SpikeGroup(x, y, o.width, o.height, o.custom.get("orientation"), false);
           spike.cameras = Reg.backgroundCameras;
           backgroundSpikes.add(spike);
+        }
+      case "checkpoint":
+        if (g.name == "Object Layer 1") {
+          var checkpoint = new Checkpoint(x, y, roomName);
+          checkpoint.cameras = Reg.foregroundCameras;
+          foregroundCheckpoints.add(checkpoint);
+        } else if (g.name == "Object Layer 2") {
+          var checkpoint = new Checkpoint(x, y, roomName);
+          checkpoint.cameras = Reg.backgroundCameras;
+          backgroundCheckpoints.add(checkpoint);
         }
     }
   }

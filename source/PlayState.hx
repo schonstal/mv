@@ -17,7 +17,6 @@ class PlayState extends FlxState
 {
   var rooms:Dynamic = {};
   var player:Player;
-  var activeRoom:Room;
 
   var background:ScrollingBackground;
   var invertedBackground:ScrollingBackground;
@@ -84,6 +83,7 @@ class PlayState extends FlxState
     checkExits();
     touchWalls();
     touchSpikes();
+    touchCheckpoints();
 
     if(Reg.inverted) {
       backgroundEffect.target = Reg.foregroundCameras[0];
@@ -98,13 +98,21 @@ class PlayState extends FlxState
   }
 
   private function touchWalls():Void {
-    FlxG.collide(Reg.inverted ? activeRoom.backgroundTiles : activeRoom.foregroundTiles,
+    FlxG.collide(Reg.inverted ? Reg.activeRoom.backgroundTiles : Reg.activeRoom.foregroundTiles,
                 player,
                 function(tile:FlxObject, player:Player):Void { player.hitTile(tile); });
   }
 
   private function touchSpikes():Void {
-    FlxG.overlap(Reg.inverted ? activeRoom.backgroundSpikes : activeRoom.foregroundSpikes, player, die);
+    FlxG.overlap(Reg.inverted ? Reg.activeRoom.backgroundSpikes : Reg.activeRoom.foregroundSpikes, player, die);
+  }
+
+  private function touchCheckpoints():Void {
+    FlxG.overlap(Reg.inverted ? Reg.activeRoom.backgroundCheckpoints : Reg.activeRoom.foregroundCheckpoints,
+                 player,
+                 function(checkpoint:Checkpoint, player:Player):Void {
+                   checkpoint.activate();
+                 });
   }
 
   private function die(killer:FlxObject, player:Player):Void {
@@ -122,41 +130,45 @@ class PlayState extends FlxState
   private function checkExits():Void {
     if(player.x < 0) {
       player.x = FlxG.width - player.width;
-      switchRoom(activeRoom.properties.get("west"));
+      switchRoom(Reg.activeRoom.properties.get("west"));
     } else if(player.x + player.width > FlxG.width) {
       player.x = 0;
-      switchRoom(activeRoom.properties.get("east"));
+      switchRoom(Reg.activeRoom.properties.get("east"));
     } else if (player.y < 0) {
       player.y = FlxG.height - player.height;
-      switchRoom(activeRoom.properties.get("north"));
+      switchRoom(Reg.activeRoom.properties.get("north"));
     } else if (player.y + player.height > FlxG.height) {
       player.y = 0;
-      switchRoom(activeRoom.properties.get("south"));
+      switchRoom(Reg.activeRoom.properties.get("south"));
     }
   }
 
   public function switchRoom(roomName:String):Void {
     var room:Room = Reflect.field(rooms, roomName);
     if (room == null) {
-      room = new Room("assets/tilemaps/" + roomName + ".tmx");
+      room = new Room(roomName);//"assets/tilemaps/" + roomName + ".tmx");
       Reflect.setField(rooms, roomName, room);
     }
-    if (activeRoom != null) {
-      remove(activeRoom.foregroundTiles);
-      remove(activeRoom.backgroundTiles);
-      remove(activeRoom.foregroundSpikes);
-      remove(activeRoom.backgroundSpikes);
+    if (Reg.activeRoom != null) {
+      remove(Reg.activeRoom.foregroundTiles);
+      remove(Reg.activeRoom.backgroundTiles);
+      remove(Reg.activeRoom.foregroundSpikes);
+      remove(Reg.activeRoom.backgroundSpikes);
+      remove(Reg.activeRoom.foregroundCheckpoints);
+      remove(Reg.activeRoom.backgroundCheckpoints);
     }
     remove(player);
     remove(respawnSprite);
 
-    activeRoom = room;
-    activeRoom.loadObjects(this);
-    add(activeRoom.backgroundTiles);
+    Reg.activeRoom = room;
+    Reg.activeRoom.loadObjects(this);
+    add(Reg.activeRoom.backgroundTiles);
     add(player);
     add(respawnSprite);
-    add(activeRoom.backgroundSpikes);
-    add(activeRoom.foregroundSpikes);
-    add(activeRoom.foregroundTiles);
+    add(Reg.activeRoom.backgroundSpikes);
+    add(Reg.activeRoom.foregroundSpikes);
+    add(Reg.activeRoom.foregroundTiles);
+    add(Reg.activeRoom.backgroundCheckpoints);
+    add(Reg.activeRoom.foregroundCheckpoints);
   }
 }
