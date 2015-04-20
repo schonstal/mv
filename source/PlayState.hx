@@ -109,6 +109,7 @@ class PlayState extends FlxState
 
   private function die(killer:FlxObject, player:Player):Void {
     if(player.dead) return;
+    FlxG.camera.shake(0.005, 0.125);
     player.die();
     respawnSprite.die();
     new FlxTimer().start(0.3, function(t:FlxTimer):Void {

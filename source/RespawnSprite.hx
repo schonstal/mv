@@ -7,6 +7,7 @@ import flash.geom.Point;
 import flixel.system.FlxSound;
 import flixel.FlxCamera.FlxCameraShakeDirection;
 import flixel.input.gamepad.XboxButtonID;
+import flash.display.BlendMode;
 
 class RespawnSprite extends FlxSprite
 {
@@ -25,6 +26,9 @@ class RespawnSprite extends FlxSprite
 
   private function finishAnimation(animation:String):Void {
     visible = false;
+    if(!Reg.player.dead) {
+      Reg.player.start();
+    }
   }
 
   public function spawn():Void {

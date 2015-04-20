@@ -55,6 +55,7 @@ class Player extends FlxSprite
   private var jumpThreshold:Float = 0.1;
 
   public var dead:Bool = false;
+  public var started:Bool = false;
   public var respawnSprite:RespawnSprite;
 
   public var lockedToFlags:Int = 0;
@@ -92,8 +93,6 @@ class Player extends FlxSprite
     _speed.y = 400;
     _speed.x = 1500;
 
-    acceleration.y = _gravity;
-
     maxVelocity.x = RUN_SPEED;
 
     jumpSound = FlxG.sound.load("assets/sounds/jump.wav");
@@ -117,10 +116,16 @@ class Player extends FlxSprite
 
     velocity.x = velocity.y = 0;
     acceleration.x = 0;
-    acceleration.y = _gravity;
     exists = true;
+    visible = false;
 
     facing = FlxObject.RIGHT;
+  }
+
+  public function start():Void {
+    visible = true;
+    acceleration.y = _gravity;
+    started = true;
   }
 
   public function playRunAnim():Void {
@@ -265,7 +270,7 @@ class Player extends FlxSprite
 
   override public function update(elapsed:Float):Void {
     this.elapsed = elapsed;
-    if(!dead) {
+    if(!dead && started) {
       checkGround();
       checkWalls();
       handleMovement();
@@ -274,7 +279,7 @@ class Player extends FlxSprite
       if(facing == FlxObject.RIGHT) {
         offset.x = 3;
       } else {
-        offset.x = 0;
+        offset.x = 1;
       }
     }
 
