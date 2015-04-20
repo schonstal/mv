@@ -33,6 +33,8 @@ class PlayState extends FlxState
 
   var titleSprite:FlxSprite;
 
+  var spawnSound:FlxSound;
+
   override public function create():Void {
     super.create();
     FlxG.camera.flash(0xffffffff, 0.5);
@@ -60,12 +62,14 @@ class PlayState extends FlxState
 
     loadLevel();
 
+    spawnSound = FlxG.sound.load("assets/sounds/spawn.wav", 0.6);
     if(!Reg.started) {
       Reg.started = true;
       titleSprite = new FlxSprite(173, 30);
       titleSprite.loadGraphic("assets/images/title.png");
       titleSprite.cameras = Reg.backgroundCameras.concat(Reg.foregroundCameras);
       add(titleSprite);
+      spawnSound.play();
     }
 
     //DEBUGGER
@@ -119,6 +123,7 @@ class PlayState extends FlxState
 
   private function die(killer:FlxObject, player:Player):Void {
     if(player.dead) return;
+    FlxG.sound.play("assets/sounds/die.wav", 0.9);
     FlxG.camera.shake(0.005, 0.125);
     player.die();
     player.jumpSprite = jumpSprite;
@@ -131,6 +136,7 @@ class PlayState extends FlxState
   }
 
   public function respawn():Void {
+    spawnSound.play();
     FlxG.camera.stopFX();
     FlxG.camera.flash(0xffffffff, 0.5);
     remove(player);

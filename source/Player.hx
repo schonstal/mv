@@ -7,6 +7,7 @@ import flash.geom.Point;
 import flixel.system.FlxSound;
 import flixel.FlxCamera.FlxCameraShakeDirection;
 import flixel.input.gamepad.XboxButtonID;
+import flixel.math.FlxRandom;
 
 class Player extends FlxSprite
 {
@@ -71,6 +72,11 @@ class Player extends FlxSprite
 
   var jumpSound:FlxSound;
 
+  var runSounds:Array<FlxSound> = new Array<FlxSound>();
+  var runSoundRandom:FlxRandom = new FlxRandom();
+  var _runSoundTimer:Float = 0;
+  var _runSoundThreshold:Float = 0.1;
+
   public function new(X:Float=0,Y:Float=0) {
     super(X,Y);
     loadGraphic("assets/images/player.png", true, 16, 16);
@@ -98,6 +104,11 @@ class Player extends FlxSprite
     maxVelocity.x = RUN_SPEED;
 
     jumpSound = FlxG.sound.load("assets/sounds/jump.wav");
+    
+    for(i in (1...4)) {
+      runSounds.push(FlxG.sound.load("assets/sounds/run" + i + ".wav", 0.4));
+    }
+
     setFacingFlip(FlxObject.LEFT, true, false);
     setFacingFlip(FlxObject.RIGHT, false, false);
   }
@@ -131,10 +142,27 @@ class Player extends FlxSprite
   }
 
   public function playRunAnim():Void {
-    if(!_jumping && !_landing && !stuckToWall()) {
+    if(canRun()) {
       if(_justLanded) animation.play("run from landing");
       else animation.play("run");
     }
+    //playRunSound();
+  }
+
+  private function playRunSound():Void {
+    if(canRun()) {
+      _runSoundTimer += elapsed;
+      if(_runSoundTimer > _runSoundThreshold) {
+        runSounds[runSoundRandom.int(0,2)].play(true);
+        _runSoundTimer = 0;
+      }
+    } else {
+      _runSoundTimer = 0;
+    }
+  }
+
+  private function canRun():Bool {
+    return !_jumping && !_landing && !stuckToWall();
   }
 
   private function jumpPressed():Bool {
