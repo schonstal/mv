@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="20" tileheight="20">
+ <properties>
+  <property name="east" value="pit"/>
+  <property name="north" value=""/>
+  <property name="south" value=""/>
+  <property name="west" value="howtojump"/>
+ </properties>
+ <tileset firstgid="1" name="1" tilewidth="20" tileheight="20">
+  <image source="../images/tiles/1.png" width="120" height="320"/>
+ </tileset>
+ <tileset firstgid="97" name="2" tilewidth="20" tileheight="20">
+  <image source="../images/tiles/2.png" width="120" height="320"/>
+ </tileset>
+ <layer name="Tile Layer 2" width="32" height="18">
+  <properties>
+   <property name="tilesheet" value="1"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJwzZmBgMMaDeYGYiwbYBIitCdgNwiwMtAWD3X6rAbTfhAj7zYFYnwSsBsSWQGwKxGZINDb7YXLUBJxQs0FpzwaJBvkVOW1aQuU8aGQ/DNMbmAyw/ejxTQ7Al+aMCOiFxfdA+R+Un5DjgN5goON/oNM/uv2g8IClSVjcMJOJTdDM8yLCflg5Y8OAvQwkFZswoJZp6P4RoZI9wwUDAM3YLhg=
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="32" height="18">
+  <data encoding="base64" compression="zlib">
+   eJwzZmBgMMaDeYGYiwbYCoitCdgNwiwMtAWD3X6TAbQfZLclAf3mQKxPAlaDmmsKxGZINDb7YXLUBJxQs0FpzwaJBrkJOW3C0qcHjeyHYXoDqwG2Hz2+yQH40pwRAb2w+B4o/8Py1EDaP5DxP9DpH91+5LIIlDfs6Gw/KC0gp0lhIGamIRZhwF7WjlQMANBbKO0=
+  </data>
+ </layer>
+ <objectgroup color="#25c5c0" name="Object Layer 1" width="32" height="18">
+  <object type="spikes" x="100" y="280" width="460" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ff00ff" name="Object Layer 2" width="32" height="18">
+  <object type="spikes" x="480" y="280" width="80" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
