@@ -45,7 +45,7 @@ class SpikeGroup extends FlxSpriteGroup
           spikeSprite.offset.x = 3;
           spikeSprite.height = 7;
           spikeSprite.offset.y = 3;
-          spikeSprite.x = X + (i * 10);
+          spikeSprite.x = X + (i * 10) + spikeSprite.offset.x;
           spikeSprite.y = Y + height - 10 + spikeSprite.offset.y;
           spikeSprite.setFacingFlip(FlxObject.UP, false, false);
           spikeSprite.facing = FlxObject.UP;
@@ -53,7 +53,7 @@ class SpikeGroup extends FlxSpriteGroup
           spikeSprite.width = 4;
           spikeSprite.offset.x = 3;
           spikeSprite.height = 7;
-          spikeSprite.x = X + (i * 10);
+          spikeSprite.x = X + (i * 10) + spikeSprite.offset.x;
           spikeSprite.y = Y;
           spikeSprite.setFacingFlip(FlxObject.DOWN, false, true);
           spikeSprite.facing = FlxObject.DOWN;

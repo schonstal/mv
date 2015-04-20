@@ -52,7 +52,7 @@ class PlayState extends FlxState
     add(globalEffect);
 
     if(Reg.checkpoint == null) {
-      Reg.checkpoint = new Checkpoint(340, 220, "start");
+      Reg.checkpoint = new Checkpoint(180, 220, "start");
     }
 
     player = new Player(Reg.checkpoint.x + 4, Reg.checkpoint.y - 4);
@@ -85,10 +85,10 @@ class PlayState extends FlxState
     
     player.resetFlags();
 
-    checkExits();
-    touchWalls();
     touchSpikes();
     touchCheckpoints();
+    checkExits();
+    touchWalls();
 
     if(Reg.inverted) {
       backgroundEffect.target = Reg.foregroundCameras[0];
@@ -167,6 +167,7 @@ class PlayState extends FlxState
 
     Reg.activeRoom = room;
     Reg.activeRoom.loadObjects(this);
+    Reg.activeRoom.refresh();
     add(Reg.activeRoom.backgroundTiles);
     add(player);
     add(respawnSprite);

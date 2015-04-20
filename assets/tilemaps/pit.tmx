@@ -17,13 +17,25 @@
    <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzFlksKgDAMBQO6UfA0VsHPRl3oHbz/PUwgD+MBzAsMtqsJTZPai0ifQHFsPft68n2ntAmUwKCM7q8lN25lUVaS3wK1YPpnov+Q9wwYfuTA9Iu8vckKzAJWYA5kxubOSjmVK9mP2cM6d/Q+0x+xXOwe7Alu1B59h6/VJOMexNrj/Y1v9N/RyPdfIJIxBxt3TZ7DA5XQFtc=
+   eJzFlkEKgDAMBBf0UsHXWIWqF/Ggf/D//zCFhMYHmF0YrKcpjU2cAEwBZKWuV10XfR+FIYDsmIVF/T1i8wibsJP8NVYLpn8l+k+0M2D4bQ9MP9DuJivWC1ixPhCZQ52dcAl3sN96D+vc7e4z/Z66l6jvwM+d7J5Wk7/ja2/z18/ov5Pw/RfwRPTBpK6ie3gBWjAWsw==
   </data>
  </layer>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJzFldEKwzAIRYX2qbCvaVdI1pd2D+v/f9EUvFRGaBIYKlxoQHs0JnEmotlBiwrf2awfrMlByeTxZK3KH8nXhP9ibUF8sURXbyL49jxE8O35i+CLvYP5RNd9jDJhp0A+3gFP25U5sD6s05mPtyeq77h7PXzZs+MPPmTYv/Pg0NyGgrBndwafUjxk5w7en6SxJ93P0NxQV20OI8dc8K/F1/qVG/iotyXXXn7PP1H/F7WJI7Q=
+   eJzFlc0KwkAMhAfqSfBpqkKqF/Wg7/9EJrChY4ntCpIMDLSw7Jf9m4wAxgQfm/17ov+Dep9goTpO6nPj75Ar41/U1yK+STCfTQWf70MFn+9fBd/0KOYD83uskrGlkO85kKlbYw7qp/qVzPfsqTp3f3u/8G3P7n8YA2JH/cBqGxbmvF4T7+tyDjf3Hc8fwWc/+NY/p451ca5Hdg7nHzO2+veaojkjS+e4qIat9ffO5bW+AUPAJAc=
   </data>
  </layer>
- <objectgroup name="Hazards 1" width="32" height="18"/>
+ <objectgroup color="#00ffff" name="Object Layer 1" width="32" height="18"/>
+ <objectgroup color="#ff00ff" name="Object Layer 2" width="32" height="18">
+  <object type="spikes" x="80" y="280" width="20" height="80">
+   <properties>
+    <property name="orientation" value="right"/>
+   </properties>
+  </object>
+  <object type="spikes" x="540" y="280" width="20" height="80">
+   <properties>
+    <property name="orientation" value="left"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

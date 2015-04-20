@@ -15,7 +15,7 @@ class Player extends FlxSprite
   public static var WALL_UP:Int = 1 << 3;
   public static var WALL:Int = WALL_LEFT|WALL_RIGHT;
 
-  public static var RUN_SPEED:Float = 425;
+  public static var RUN_SPEED:Float = 375;
 
   private var _speed:Point;
   private var _gravity:Float = 1200; 
@@ -37,7 +37,7 @@ class Player extends FlxSprite
   private var _wallJumping:Bool = false;
 
   //Push off the wall a little less than you can run
-  private var wallJumpSpeed:Float = 375;
+  private var wallJumpSpeed:Float = 350;
 
   //Allow the user to push jump a little bit after they fall off the wall
   private var _wallJumpTimer:Float = 0;

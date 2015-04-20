@@ -168,6 +168,17 @@ class Room extends TiledMap
         }
     }
   }
+
+  public function refresh():Void {
+    for (c in backgroundCheckpoints.members) {
+      var checkpoint:Checkpoint = cast c;
+      checkpoint.refresh();
+    }
+    for (c in foregroundCheckpoints.members) {
+      var checkpoint:Checkpoint = cast c;
+      checkpoint.refresh();
+    }
+  }
   
   public function collideWithLevel(obj:FlxObject,
                                    ?notifyCallback:FlxObject->FlxObject->Void,
