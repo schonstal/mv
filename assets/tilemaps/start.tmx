@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="20" tileheight="20">
  <properties>
-  <property name="east" value="pit"/>
+  <property name="east" value="howtojump"/>
   <property name="north" value=""/>
   <property name="south" value=""/>
   <property name="west" value=""/>
@@ -17,16 +17,16 @@
    <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMB7Fo3gUj2I0zAvEXBRiPgrsZ2GgHHDiMd+SxvY7ArEZFnNNgNgUhxw17XcHYhsgtmJAxIcV1H5rqBw++00otJ8YMJjth4VVCJQG8ZnJxDD9sHg3gYrjsx9ZrQkBtcRg5Hi3gmJ86olJI+S6A5keSAwAHllaKA==
+   eJwzZmBgMB7Fo3gUj2I0zAvEXBRiPgrsZ2GgHHDiMd+SxvY7ArEZFnNNgNgUhxw17XcHYhsgtmJAxIcV1H5rqBw++60otJ8YgM9+UBg5DaD9sDAChRczFFsxIOIuhAGShkzQ1GDDJmh6YerJyRcwd8HMIpSOkdMdTK8VFJObN4lNQ7j0ItMDiQGtL1uN
   </data>
  </layer>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMB7Fo3gUj2I0zAvEXBRiPgrsZ2GgHHDiMd+ExvY7ArEZFnOtgNgUhxw17XcHYhsGiD9h8WECxdZQOXz2W1FoPzEAn/0mg8B+UBiEMCDCjZlMDNMPi3dLqDg++2FqTaDqKc3PIL/A4h3mHnzqiUkj5GATNHogMQD/1lob
+   eJwzZmBgMB7Fo3gUj2I0zAvEXBRiPgrsZ2GgHHDiMd+ExvY7ArEZFnOtgNgUhxw17XcHYhsGiD9h8WECxdZQOXz2m1BoPzEAn/2gMHIaQPthYWQJxMxQbMKAiLsQKN8KSjPjwSZoemFmkpMvYO6CmUUoHSOnO5heExL0ETKLVL0maPRAYgBu+1t2
   </data>
  </layer>
  <objectgroup color="#25c5c0" name="Object Layer 1" width="32" height="18">
-  <object type="checkpoint" x="180" y="220" width="20" height="80"/>
+  <object type="checkpoint" x="300" y="220" width="20" height="80"/>
  </objectgroup>
  <objectgroup color="#ff00ff" name="Object Layer 2" width="32" height="18"/>
 </map>

@@ -12,21 +12,21 @@
  <tileset firstgid="97" name="2" tilewidth="20" tileheight="20">
   <image source="../images/tiles/2.png" width="120" height="320"/>
  </tileset>
- <layer name="Tile Layer 2" width="32" height="18">
+ <layer name="Tile Layer 2" width="32" height="18" visible="0">
   <properties>
    <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMB7Fo3gUj2I0zAvEXBRiPgrsZ2GgHHDiMd+SxvY7ArEZFnNNgNgUhxw17XcHYhsgtmJAxIcV1H5rqBw++00otJ8YMJjth4VVCJQG8ZnJxDD9sHg3gYrjsx9ZrQkBtcRg5Hi3gmJ86olJI+S6A5keSAwAHllaKA==
+   eJwzZmBgMB7Fo3gUj2I0zAvEXFTEpkBshsMuegB3ILZBstOSzvaDACcQmzCghgUHHe23gtpvzQAJi5EOYPEPCxcQDmFAxI8dEDMjYSYy7TGB2gEz1wRqHnIeQJaHxQ96PhFGcw+x2JgBNd6toBjdfJi8CRY5amETNHogMQAG+E3s
   </data>
  </layer>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMB7Fo3gUj2I0zAvEXBRiPgrsZ2GgHHDiMd+ExvY7ArEZFnOtgNgUhxw17XcHYhsGiD9h8WECxdZQOXz2W1FoPzEAn/0mg8B+UBiEMCDCjZlMDNMPi3dLqDg++2FqTaDqKc3PIL/A4h3mHnzqiUkj5GATNHogMQD/1lob
+   eJwzZmBgMB7FIxrzAjHXAGGQ/SwMAwdG7R+1fyDtB+UBjgG0HxcwAeIQIDYFYjMonxmImcgwy5YBEs62UHNMkMzFBWDy1kBsw4Aoq4Sh7iAFizCglndWSOZiU2+CJG/FQP3ydhQPHgwAiT46ew==
   </data>
  </layer>
  <objectgroup color="#25c5c0" name="Object Layer 1" width="32" height="18">
-  <object type="checkpoint" x="180" y="220" width="20" height="80"/>
+  <object type="checkpoint" x="140" y="180" width="20" height="80"/>
  </objectgroup>
  <objectgroup color="#ff00ff" name="Object Layer 2" width="32" height="18"/>
 </map>
