@@ -29,7 +29,7 @@ class PlayState extends FlxState
   var globalEffect:EffectSprite;
 
   var respawnSprite:RespawnSprite;
-  var jumpSprite:RespawnSprite;
+  var jumpSprite:JumpSprite;
 
   var titleSprite:FlxSprite;
 
@@ -152,7 +152,9 @@ class PlayState extends FlxState
     add(respawnSprite);
 
     jumpSprite = new JumpSprite();
-    add(jumpSprite());
+    jumpSprite.cameras = Reg.backgroundCameras.concat(Reg.foregroundCameras);
+    player.jumpSprite = jumpSprite;
+    add(jumpSprite);
 
     switchRoom(Reg.checkpoint.room);
     Reg.inverted = Reg.checkpoint.inverted;
