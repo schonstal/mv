@@ -57,6 +57,8 @@ class Player extends FlxSprite
   public var dead:Bool = false;
   public var started:Bool = false;
   public var respawnSprite:RespawnSprite;
+  public var jumpSprite:JumpSprite;
+
 
   public var lockedToFlags:Int = 0;
 
@@ -150,13 +152,14 @@ class Player extends FlxSprite
   }
 
   private function jump():Void {
-    jumpSound.play();
+    jumpSound.play(true);
     animation.play("jump start");
     _jumping = true;
     velocity.y = -_speed.y;
     _jumpPressed = false;
     Reg.inverted = !Reg.inverted;
     FlxG.camera.flash(0x33ffffff, 0.1);
+    jumpSprite.jump();
   }
 
   private function tryJumping():Void {

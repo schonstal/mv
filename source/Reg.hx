@@ -19,6 +19,7 @@ class Reg
   public static var foregroundCameras:Array<FlxCamera> = [];
   public static var backgroundCameras:Array<FlxCamera> = [];
   public static var inverted:Bool = false;
+  public static var started:Bool = false;
 
   public static var checkpoint:Checkpoint;
 

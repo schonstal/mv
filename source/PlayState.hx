@@ -29,6 +29,9 @@ class PlayState extends FlxState
   var globalEffect:EffectSprite;
 
   var respawnSprite:RespawnSprite;
+  var jumpSprite:RespawnSprite;
+
+  var titleSprite:FlxSprite;
 
   override public function create():Void {
     super.create();
@@ -55,17 +58,15 @@ class PlayState extends FlxState
       Reg.checkpoint = new Checkpoint(300, 220, "start");
     }
 
-    player = new Player(Reg.checkpoint.x + 4, Reg.checkpoint.y - 4);
-    player.init();
-    Reg.player = player;
-    add(player);
+    loadLevel();
 
-    respawnSprite = new RespawnSprite();
-    respawnSprite.spawn();
-    add(respawnSprite);
-
-    switchRoom(Reg.checkpoint.room);
-    Reg.inverted = Reg.checkpoint.inverted;
+    if(!Reg.started) {
+      Reg.started = true;
+      titleSprite = new FlxSprite(173, 30);
+      titleSprite.loadGraphic("assets/images/title.png");
+      titleSprite.cameras = Reg.backgroundCameras.concat(Reg.foregroundCameras);
+      add(titleSprite);
+    }
 
     //DEBUGGER
     FlxG.debugger.drawDebug = true;
@@ -78,11 +79,6 @@ class PlayState extends FlxState
   override public function update(elapsed:Float):Void {
     super.update(elapsed);
 
-    if(FlxG.keys.justPressed.SPACE) {
-      respawnSprite.die();
-      player.visible = false;
-    }
-    
     player.resetFlags();
 
     touchSpikes();
@@ -93,6 +89,7 @@ class PlayState extends FlxState
     if(Reg.inverted) {
       backgroundEffect.target = Reg.foregroundCameras[0];
       foregroundEffect.target = Reg.backgroundCameras[0];
+      titleSprite.visible = false;
     } else {
       backgroundEffect.target = Reg.backgroundCameras[0];
       foregroundEffect.target = Reg.foregroundCameras[0];
@@ -124,12 +121,41 @@ class PlayState extends FlxState
     if(player.dead) return;
     FlxG.camera.shake(0.005, 0.125);
     player.die();
+    player.jumpSprite = jumpSprite;
     respawnSprite.die();
     new FlxTimer().start(0.3, function(t:FlxTimer):Void {
-      FlxG.camera.fade(0xffffffff, 0.5, false, function():Void {
-        FlxG.switchState(new PlayState());
+      FlxG.camera.fade(0x00ffffff, 0.5, false, function():Void {
+        respawn();
       });
     });
+  }
+
+  public function respawn():Void {
+    FlxG.camera.stopFX();
+    FlxG.camera.flash(0xffffffff, 0.5);
+    remove(player);
+    player.destroy();
+    remove(respawnSprite);
+    respawnSprite.destroy();
+
+    loadLevel();
+  }
+
+  private function loadLevel():Void {
+    player = new Player(Reg.checkpoint.x + 4, Reg.checkpoint.y - 4);
+    player.init();
+    Reg.player = player;
+    add(player);
+
+    respawnSprite = new RespawnSprite();
+    respawnSprite.spawn();
+    add(respawnSprite);
+
+    jumpSprite = new JumpSprite();
+    add(jumpSprite());
+
+    switchRoom(Reg.checkpoint.room);
+    Reg.inverted = Reg.checkpoint.inverted;
   }
 
   private function checkExits():Void {
@@ -164,6 +190,10 @@ class PlayState extends FlxState
     }
     remove(player);
     remove(respawnSprite);
+    remove(jumpSprite);
+    if(titleSprite != null) {
+      titleSprite.visible = false;
+    }
 
     Reg.activeRoom = room;
     Reg.activeRoom.loadObjects(this);
@@ -171,6 +201,7 @@ class PlayState extends FlxState
     add(Reg.activeRoom.backgroundTiles);
     add(player);
     add(respawnSprite);
+    add(jumpSprite);
     add(Reg.activeRoom.backgroundSpikes);
     add(Reg.activeRoom.foregroundSpikes);
     add(Reg.activeRoom.foregroundTiles);
