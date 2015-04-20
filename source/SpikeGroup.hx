@@ -32,21 +32,48 @@ class SpikeGroup extends FlxSpriteGroup
     for(i in 0...count) {
       spikeSprite = new FlxSprite();
       spikeSprite.loadGraphic("assets/images/spikes.png", true, 10, 10);
-      spikeSprite.animation.add("spin", [0,1,2,3,4,5,6,7,8,9], 15, true);
-      spikeSprite.animation.play("spin", false, invertAnimation, i % 9);
+      if(orientation == "up" || orientation == "down") {
+        spikeSprite.animation.add("spin", [0,1,2,3,4,5,6,7,8,9], 15, true);
+        spikeSprite.animation.play("spin", false, invertAnimation, (invertAnimation ? i % 9 : 9 - (i % 9)));
+      } else {
+        spikeSprite.animation.add("spin", [10,11,12,13,14,15,16,17,18,19], 15, true);
+        spikeSprite.animation.play("spin", false, invertAnimation, (!invertAnimation ? i % 9 : 9 - (i % 9)));
+      }
       switch(orientation) {
         case "up":
+          spikeSprite.width = 4;
+          spikeSprite.offset.x = 3;
+          spikeSprite.height = 7;
+          spikeSprite.offset.y = 3;
           spikeSprite.x = X + (i * 10);
-          spikeSprite.y = Y + height - 10;
+          spikeSprite.y = Y + height - 10 + spikeSprite.offset.y;
+          spikeSprite.setFacingFlip(FlxObject.UP, false, false);
+          spikeSprite.facing = FlxObject.UP;
         case "down":
+          spikeSprite.width = 4;
+          spikeSprite.offset.x = 3;
+          spikeSprite.height = 7;
           spikeSprite.x = X + (i * 10);
           spikeSprite.y = Y;
+          spikeSprite.setFacingFlip(FlxObject.DOWN, false, true);
+          spikeSprite.facing = FlxObject.DOWN;
         case "left":
-          spikeSprite.x = X + width - 10;
-          spikeSprite.y = Y + (i * 10);
+          spikeSprite.width = 7;
+          spikeSprite.offset.x = 3;
+          spikeSprite.height = 4;
+          spikeSprite.offset.y = 3;
+          spikeSprite.x = X + width - 10 + spikeSprite.offset.x;
+          spikeSprite.y = Y + (i * 10) + spikeSprite.offset.y;
+          spikeSprite.setFacingFlip(FlxObject.LEFT, true, false);
+          spikeSprite.facing = FlxObject.LEFT;
         case "right":
+          spikeSprite.width = 7;
+          spikeSprite.height = 4;
+          spikeSprite.offset.y = 3;
           spikeSprite.x = X;
-          spikeSprite.y = Y + (i * 10);
+          spikeSprite.y = Y + (i * 10) + spikeSprite.offset.y;
+          spikeSprite.setFacingFlip(FlxObject.RIGHT, false, false);
+          spikeSprite.facing = FlxObject.RIGHT;
       }
       //spikeSprite.cameras = cameras;
       add(spikeSprite);

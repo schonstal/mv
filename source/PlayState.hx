@@ -29,11 +29,11 @@ class PlayState extends FlxState
   var foregroundEffect:EffectSprite;
   var globalEffect:EffectSprite;
 
-  var shimmerOverlay:FlxSprite;
-  var shimmerSin:Float = 0;
+  var respawnSprite:RespawnSprite;
 
   override public function create():Void {
     super.create();
+    FlxG.camera.flash(0xffffffff, 0.5);
 		Reg.backgroundCameras = [new FlxCamera(0, 0, FlxG.width*2, FlxG.height*2)];
     Reg.foregroundCameras = [new FlxCamera(0, 0, FlxG.width*2, FlxG.height*2)];
 
@@ -54,9 +54,17 @@ class PlayState extends FlxState
 
     player = new Player(FlxG.width/2,FlxG.height/4*3-20);
     player.init();
+    Reg.player = player;
     add(player);
 
+    respawnSprite = new RespawnSprite();
+    respawnSprite.spawn();
+    add(respawnSprite);
+
     switchRoom("start");
+
+    //DEBUGGER
+    FlxG.debugger.drawDebug = true;
   }
   
   override public function destroy():Void {
@@ -65,11 +73,17 @@ class PlayState extends FlxState
 
   override public function update(elapsed:Float):Void {
     super.update(elapsed);
+
+    if(FlxG.keys.justPressed.SPACE) {
+      respawnSprite.die();
+      player.visible = false;
+    }
     
     player.resetFlags();
 
     checkExits();
     touchWalls();
+    touchSpikes();
 
     if(Reg.inverted) {
       backgroundEffect.target = Reg.foregroundCameras[0];
@@ -87,6 +101,21 @@ class PlayState extends FlxState
     FlxG.collide(Reg.inverted ? activeRoom.backgroundTiles : activeRoom.foregroundTiles,
                 player,
                 function(tile:FlxObject, player:Player):Void { player.hitTile(tile); });
+  }
+
+  private function touchSpikes():Void {
+    FlxG.overlap(Reg.inverted ? activeRoom.backgroundSpikes : activeRoom.foregroundSpikes, player, die);
+  }
+
+  private function die(killer:FlxObject, player:Player):Void {
+    if(player.dead) return;
+    player.die();
+    respawnSprite.die();
+    new FlxTimer().start(0.3, function(t:FlxTimer):Void {
+      FlxG.camera.fade(0xffffffff, 0.5, false, function():Void {
+        FlxG.switchState(new PlayState());
+      });
+    });
   }
 
   private function checkExits():Void {
@@ -118,11 +147,13 @@ class PlayState extends FlxState
       remove(activeRoom.backgroundSpikes);
     }
     remove(player);
+    remove(respawnSprite);
 
     activeRoom = room;
     activeRoom.loadObjects(this);
     add(activeRoom.backgroundTiles);
     add(player);
+    add(respawnSprite);
     add(activeRoom.backgroundSpikes);
     add(activeRoom.foregroundSpikes);
     add(activeRoom.foregroundTiles);

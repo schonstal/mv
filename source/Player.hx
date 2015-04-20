@@ -55,6 +55,7 @@ class Player extends FlxSprite
   private var jumpThreshold:Float = 0.1;
 
   public var dead:Bool = false;
+  public var respawnSprite:RespawnSprite;
 
   public var lockedToFlags:Int = 0;
 
@@ -90,7 +91,6 @@ class Player extends FlxSprite
     _speed = new Point();
     _speed.y = 400;
     _speed.x = 1500;
-
 
     acceleration.y = _gravity;
 
@@ -271,6 +271,11 @@ class Player extends FlxSprite
       handleMovement();
       tryJumping();
       terminalVelocity();
+      if(facing == FlxObject.RIGHT) {
+        offset.x = 3;
+      } else {
+        offset.x = 0;
+      }
     }
 
     super.update(elapsed);
@@ -333,8 +338,8 @@ class Player extends FlxSprite
   }
 
   public function die():Void {
+    visible = false;
     animation.play("die");
-    deadTimer = 0;
     dead = true;
     acceleration.y = acceleration.x = velocity.x = velocity.y = 0;
   }
