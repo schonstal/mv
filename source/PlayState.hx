@@ -52,7 +52,7 @@ class PlayState extends FlxState
     add(globalEffect);
 
     if(Reg.checkpoint == null) {
-      Reg.checkpoint = new Checkpoint(180, 220, "start");
+      Reg.checkpoint = new Checkpoint(300, 220, "start");
     }
 
     player = new Player(Reg.checkpoint.x + 4, Reg.checkpoint.y - 4);

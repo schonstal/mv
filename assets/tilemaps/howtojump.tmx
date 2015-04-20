@@ -4,7 +4,7 @@
   <property name="east" value="pit"/>
   <property name="north" value=""/>
   <property name="south" value=""/>
-  <property name="west" value=""/>
+  <property name="west" value="start"/>
  </properties>
  <tileset firstgid="1" name="1" tilewidth="20" tileheight="20">
   <image source="../images/tiles/1.png" width="120" height="320"/>
@@ -12,21 +12,42 @@
  <tileset firstgid="97" name="2" tilewidth="20" tileheight="20">
   <image source="../images/tiles/2.png" width="120" height="320"/>
  </tileset>
- <layer name="Tile Layer 2" width="32" height="18" visible="0">
+ <layer name="Tile Layer 2" width="32" height="18">
   <properties>
    <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMB7Fo3gUj2I0zAvEXFTEpkBshsMuegB3ILZBstOSzvaDACcQmzCghgUHHe23gtpvzQAJi5EOYPEPCxcQDmFAxI8dEDMjYSYy7TGB2gEz1wRqHnIeQJaHxQ96PhFGcw+x2JgBNd6toBjdfJi8CRY5amETNHogMQAG+E3s
+   eJwzZmBgMB7Fo5hGmBeIuaDYBIitoLQJnexnYcAEpkBsRic3YLPfHYhtoGFCTjgSg02Q/IkPEGs2BwFzsAGQPz2IsB9bGNELDLT95IbtKKAOYIZi5LIphAGRdyyhbCcyzPZEMp+ZAbXsg5mPnMctkcStGSBlhDESm5lELMKAvSyxRDMfGcPE6VU+DzQGAM+BQ4M=
   </data>
  </layer>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMB7FIxrzAjHXAGGQ/SwMAwdG7R+1fyDtB+UBjgG0HxcwAeIQIDYFYjMonxmImcgwy5YBEs62UHNMkMzFBWDy1kBsw4Aoq4Sh7iAFizCglndWSOZiU2+CJG/FQP3ydhQPHgwAiT46ew==
+   eJwzZmBgMB7Fo5hGmBeIuaDYBIotoTQ97GdhwASmQGxGJzdgs98diG2gYUJOOBKDTZD8iQ8QazYHAXOwAWsg9iDCfmxhRC8w0PaTG7ajgDqAGYqRy6UQBkTesYKyncgw2xbJfGYoH2YHzHzkPI4sDso7NlBxGJuZRCzCgL0ssUIzHxnDxK1w6B1uGACJLUN0
   </data>
  </layer>
  <objectgroup color="#25c5c0" name="Object Layer 1" width="32" height="18">
-  <object type="checkpoint" x="140" y="180" width="20" height="80"/>
+  <object type="spikes" x="220" y="280" width="240" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+  <object type="checkpoint" x="100" y="220" width="20" height="80"/>
+  <object type="spikes" x="220" y="160" width="240" height="20">
+   <properties>
+    <property name="orientation" value="down"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup color="#ff00ff" name="Object Layer 2" width="32" height="18"/>
+ <objectgroup color="#ff00ff" name="Object Layer 2" width="32" height="18">
+  <object type="spikes" x="220" y="280" width="240" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+  <object type="spikes" x="220" y="160" width="240" height="20">
+   <properties>
+    <property name="orientation" value="down"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
