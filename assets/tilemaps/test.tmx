@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="20" tileheight="20">
  <properties>
-  <property name="east" value="test"/>
+  <property name="east" value="slider"/>
   <property name="north" value="pit"/>
   <property name="south" value="test"/>
   <property name="west" value="start"/>
@@ -17,12 +17,12 @@
    <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMEbCtAZWaPYhYxM62G8KxGZQu2D28kL5VnSw3xqIbaB2wdzAQgd7cYFR+3HbzwjEzEDMRKKZpOjDZz8nAXlcgJA+RwZIHrAioI5W9rszQPIAofRPK/sZoHZbElDHDsRcQMxBov3E6EMufwYi/cPCaNR+BgZhBkh+JQbDym0QDmFA1CeWJJgBwiIMuOtBQtgKyV5YfUKuWeRimL0mA2A3NTEATTIhkg==
+   eJwzZmBgMEbCtAZWSHaZotltQgf7QXaaQe2yhtrLC+Vb0cF+kJ02ULtMoPaz0MFeXGDUftz2MwIxMxAzkWgmKfrw2c9JQB4XIKTPkQGSB6wIqKOV/e4MkDxAKP3Tyn4GqN2WBNSxAzEXEHOQaD8x+mB+H6j0DwujUfsZGIQZIPmVGAwrt0E4hAFRn1iSYAYIizCg1n2kYCske2H1CblmkYth9poMgN3UxACeWiGc
   </data>
  </layer>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMCYSmzDgByYkmEUKBplrCsRmBOyHqbEi0S28QMyFBVshmWUNxB4E7HcHYhuoeksojc1cZAyyn4WAubQEo/YPHfsZgZgZD2Yi0hxHBkg+sSTRfk4G/PmIWHOQ88lA2A8CyGUEsfrYGfDnZQ4S7EcunwYi/SGH5Ui3X5gBf75CxqB4g6WdEAZEnWNCghkgLMKAPy0TWx+C6iUbCswiF8PstRoAu6mJAWwiK2s=
+   eJwzZmBgMCYSmzDgByYkmAXCpiTYC1JrRsB+mBorPG6BqQHJW0PFeIGYCwu2QjILpNaDgP3uQGwDVW8JpZHNg5mDrAZkPwsBc2kJRu0fOvYzAjEzHsxEpDmODJA8QGr642TAn0+JNQc5nwyE/SCAXEYQq4+dAXs5AcMcJNiPXD4NRPpDDsuRbr8wA/58hYxB8QZLOyEMqPUJsWaAsAgD/rRMbH0Iq0/INYtcDLPXagDspiYGALW7LGE=
   </data>
  </layer>
  <objectgroup color="#00ffff" name="Object Layer 1" width="32" height="18">

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="20" tileheight="20">
  <properties>
-  <property name="east" value="doubleJumps"/>
-  <property name="north" value="doubleJumps"/>
+  <property name="east" value="pit"/>
+  <property name="north" value="upJumps"/>
   <property name="south" value=""/>
   <property name="west" value="howToWallJump"/>
  </properties>
@@ -17,12 +17,12 @@
    <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJy1lcEKwjAMhqMTdAO96JusCp07efIBfP9nMYUGu9BkaV0DPzuky5e22b8ZADxqEHRBjRWaonLhUE/ULOTT6DO1z0q/Q9zPHfVQ+D7WquEfDO+F/b2FHPXWkt8r6+js6Z5CP68Cvjfwj6iTkHORO8L6LOT4zsDXgthpPWlWOV9baw0H9j1xvjbX1iiZKb5Wu6sdat+Yr53VpNSp5Yc55v4izbX1bmq/6bX4x1O34AdfsHybrfjOWKcVP9S1eEOOf0V1TOQ14fmB33xpXqF5ucaX5BJu+t/gvXaw9IdcnnQr4Kc1uW9voS8CTiuN
+   eJy9lt0KwjAMhesP6AS90TdxE9r1yht9AN//WUxggVCaNK2dgcMGS8/XtWm26JzzoJOgC+jeoHFRKa8UQ2bMWZkvKoAm0GMl/t4wbga9hfnxNV2LPyh53JPW6lnB9wb+AXQUnvG6wHtcq1jBHw18LULGLxj5Wm4NH30mV36nlE91/UuQx+zKNZXytb3agLYG/mvx8A18ba2C4iNFiY91nJ5fqa5b9qbmTJdC25t/8HE/a89mT/7Y4NOTj7Vq6Q2579MVtEtEvQavHzZG6xVaL+d5VCuW7zjvF1GYK+rGcnLPeR55W/4lyDPt2z30BS40K5g=
   </data>
  </layer>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJy1ldEOwiAMRasz0S2ZL/onoskYTz75Af7/t1gSiMhoLWxtcp/Y7inQ3TkAMKiB0Bl1a5AJKpVFzShHrKfVF7xHpt8h+N9RD4ZvglcL/yB4z+/vRazF3jT5/3pzwWsK/Twr+HYlPz1/A/wsaPAjO/WjZjXnc3MtrQmWe5LyubmWVs1M5c9yd7VD7ZX53P0bxqeVf4RlvpyIZ6V3o/FN+1qTqVvw/flLvk0tvhX6aPG9ryQbSvwLqssUs8bnxRu+80WdcQ98lnN8Sum/NM5XqdcOfvOhtB51reCnnnlub6EP4TArTQ==
+   eJy9VtsOwjAIxUuiM9EX/RO7JXbzxRf9AP//W4Q4EtK1lO5Gcl42OKcBCu0AwCFOCVwQ9xFwPXJ+OasiMWflvASPqBHNQvp7Q1yL+CTOJ3O6lL6V8wH/XL0K9P1EfS+4qEcoV92K+mFf+v6bRd8pviX6hDrgtehzX08x5mgh31OhvlarDWJr0H/3HLIPrPpa/Z3Ck7Kc/gGG9/eY8B1Tm7nuNJlWmzX0Kf+ld3NOfT+CZ0596lXLbHjCcD9dEbsAPCdoRn9FTCrHFeizXPpxr+T2o9ylHBM7K+EmfGL/pR/vHstbgjkt74lS/ABAwSuA
   </data>
  </layer>
  <objectgroup color="#25c5c0" name="Object Layer 1" width="32" height="18">
@@ -64,7 +64,7 @@
     <property name="orientation" value="up"/>
    </properties>
   </object>
-  <object type="spikes" x="480" y="0" width="20" height="100">
+  <object type="spikes" x="480" y="60" width="20" height="40">
    <properties>
     <property name="orientation" value="right"/>
    </properties>

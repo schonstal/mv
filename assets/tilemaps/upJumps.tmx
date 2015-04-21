@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="20" tileheight="20">
  <properties>
-  <property name="east" value="youWin"/>
-  <property name="north" value=""/>
-  <property name="south" value="test"/>
-  <property name="west" value="doubleJumps"/>
+  <property name="east" value="pit"/>
+  <property name="north" value="doubleJumps"/>
+  <property name="south" value="doubleJumps"/>
+  <property name="west" value="howToWallJump"/>
  </properties>
  <tileset firstgid="1" name="1" tilewidth="20" tileheight="20">
   <image source="../images/tiles/1.png" width="120" height="320"/>
@@ -17,24 +17,19 @@
    <property name="tilesheet" value="1"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzlljEKgDAMRQO6VPA0VqHVRRz0Dt7/HqaYYHRv/uCHR9PpB5I0HYhocCAKJc4SJ7n3TOdANIzMJP4t+epkZmYB+RdpLZD+mZ7e8NZmckD4aw7ahyjtzAH0/6NWumvegPz17UH1PXru4oeSi9cc2r0Tzak1qS1be92/dkfXVqD3X8DisYeCeCXJ4QIy0RYO
+   eJwzZmBgMB7Fo3gUj+JRPKwwLxBzEcC0tJ+FgTAYifYzAjEzFA+E/Zw0tnco2Q8Alq1n/Q==
   </data>
  </layer>
  <layer name="Tile Layer 1" width="32" height="18">
   <data encoding="base64" compression="zlib">
-   eJzllc0Kg0AMhAf0JPRptEKsl9pD+/5P5AYNjstW9yCbgwMfKCyZ7E+SFkBbgG7Fvgf6fwSaAgjl8Qz0q3+NslL/V2B08lcJtrvx8I/fQ2nZ+1PEwV/1wfYOvfQN/Bz976g3ljuvnPyt93jUnYprL1d6ZtMFa4B93cfzQHOrIrhfH4nPNY5h8Nyx/ifYz4N/83PI2Bf39RTmw/OXPc7m95FSMVNI5rpUDmf7z41luc4a4SNi
+   eJwzZmBgMB7Fo3gUj+JRPKwwLxBzEcC0tJ+FgTAYifYzAjEzFA+E/Zw0tnco2Q8Alq1n/Q==
   </data>
  </layer>
- <objectgroup color="#00ffff" name="Object Layer 1" width="32" height="18"/>
+ <objectgroup color="#25c5c0" name="Object Layer 1" width="32" height="18"/>
  <objectgroup color="#ff00ff" name="Object Layer 2" width="32" height="18">
-  <object type="spikes" x="80" y="280" width="20" height="80">
+  <object type="spikes" x="480" y="240" width="20" height="120">
    <properties>
     <property name="orientation" value="right"/>
-   </properties>
-  </object>
-  <object type="spikes" x="540" y="280" width="20" height="80">
-   <properties>
-    <property name="orientation" value="left"/>
    </properties>
   </object>
  </objectgroup>

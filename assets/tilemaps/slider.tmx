@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="18" tilewidth="20" tileheight="20">
+ <properties>
+  <property name="east" value="youWin"/>
+  <property name="north" value="pit"/>
+  <property name="south" value="test"/>
+  <property name="west" value="test"/>
+ </properties>
+ <tileset firstgid="1" name="1" tilewidth="20" tileheight="20">
+  <image source="../images/tiles/1.png" width="120" height="320"/>
+ </tileset>
+ <tileset firstgid="97" name="2" tilewidth="20" tileheight="20">
+  <image source="../images/tiles/2.png" width="120" height="320"/>
+ </tileset>
+ <layer name="Tile Layer 2" width="32" height="18">
+  <properties>
+   <property name="tilesheet" value="1"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzFlkEPgjAMhRv1oB44eeXm3UQRw+Rn+P9/izTsxUJcN1qMTd6tH4+9boOWiG4ONVHHhaoi30fe6h/IVgfBd4Y1VJHx+luL+fug9o/+TxrnlyrOZ/NDf+Z3So+Wz1r+jdKj5SN53kP1oIui6xc+N3/uSeUj/XM5pvjc/EOBP2Tx98x/fucs9QffKT1aPpi71Z9Zz/zBevIvOf947oOmexms5i+Zuc403sN7xb/kfpTfsbUrlw/8Pd8RrQLl14X18z5GXq/Igt8adaLP/0GqR55B5IX38PwXlOoNi48mqQ==
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="32" height="18">
+  <data encoding="base64" compression="zlib">
+   eJzFlTEOwjAMRS1goAwsZWVjR4LSKoVjcP+zEKv9Io0aJ7WLsPSn5vtFtuO2RHQ3qPdqvA4LdRz9rzGHls9sTVSBH1p6f/Y4I18b7H94tX/kP2noXyq4r5sf8tm/E85I9VmL3wtnpPqEfp6js9dV0G3Gn+s/n0nVJ+Tn6pjy5/rvCviQhm/pf2Pkw6/tv4vuoOFb+g+vpf4l7x95O5rOMrwSP/TEutCwh/cCv2Q/gq/d41Lk6gM+/j9rB+eU5hN8zDHq9abvfLK2glL7naMqyBG+QdQL93DR9znVQu5Tgf8DZr8lNQ==
+  </data>
+ </layer>
+ <objectgroup color="#00ffff" name="Object Layer 1" width="32" height="18">
+  <object type="spikes" x="140" y="240" width="140" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+  <object type="spikes" x="60" y="160" width="20" height="160">
+   <properties>
+    <property name="orientation" value="right"/>
+   </properties>
+  </object>
+  <object type="spikes" x="340" y="200" width="20" height="20">
+   <properties>
+    <property name="orientation" value="right"/>
+   </properties>
+  </object>
+  <object type="spikes" x="340" y="120" width="20" height="20">
+   <properties>
+    <property name="orientation" value="right"/>
+   </properties>
+  </object>
+  <object type="spikes" x="340" y="40" width="20" height="20">
+   <properties>
+    <property name="orientation" value="right"/>
+   </properties>
+  </object>
+  <object type="spikes" x="520" y="220" width="80" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+  <object type="spikes" x="460" y="60" width="40" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+  <object type="spikes" x="500" y="80" width="20" height="240">
+   <properties>
+    <property name="orientation" value="right"/>
+   </properties>
+  </object>
+  <object type="spikes" x="340" y="320" width="120" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ff00ff" name="Object Layer 2" width="32" height="18">
+  <object type="spikes" x="140" y="240" width="140" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+  <object type="spikes" x="260" y="60" width="20" height="140">
+   <properties>
+    <property name="orientation" value="left"/>
+   </properties>
+  </object>
+  <object type="spikes" x="440" y="240" width="20" height="20">
+   <properties>
+    <property name="orientation" value="left"/>
+   </properties>
+  </object>
+  <object type="spikes" x="440" y="160" width="20" height="20">
+   <properties>
+    <property name="orientation" value="left"/>
+   </properties>
+  </object>
+  <object type="spikes" x="440" y="80" width="20" height="20">
+   <properties>
+    <property name="orientation" value="left"/>
+   </properties>
+  </object>
+  <object type="checkpoint" x="100" y="260" width="20" height="80"/>
+  <object type="spikes" x="460" y="60" width="40" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+  <object type="spikes" x="520" y="220" width="80" height="20">
+   <properties>
+    <property name="orientation" value="up"/>
+   </properties>
+  </object>
+  <object type="spikes" x="580" y="20" width="20" height="160">
+   <properties>
+    <property name="orientation" value="left"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
